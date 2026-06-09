@@ -52,33 +52,20 @@ function Navbar() {
 
   return (
     <nav className={`corp-nav ${scrolled ? "scrolled" : ""}`}>
-      {/* Top bar */}
-      <div className={`border-b transition-all duration-300 ${scrolled ? "border-gray-100" : "border-white/10"}`}>
-        <div className="max-w-[1280px] mx-auto px-8 py-3 flex items-center justify-between">
-          <div className={`flex items-center gap-6 text-sm font-medium transition-colors ${scrolled ? "text-gray-500" : "text-white/60"}`}>
-            <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> +1 (800) 555-0199</span>
-            <span className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5" /> info@corpai.advisor.com</span>
-          </div>
-          <div className={`flex items-center gap-4 text-sm font-medium transition-colors ${scrolled ? "text-gray-500" : "text-white/60"}`}>
-            <Link href="/dashboard" className="hover:text-[#c8a96e] transition-colors flex items-center gap-1">
-              <BarChart3 className="w-3.5 h-3.5" /> Dashboard Portal
-            </Link>
-          </div>
-        </div>
-      </div>
+
 
       {/* Main Nav */}
-      <div className="max-w-[1280px] mx-auto px-8 py-5.5 flex items-center justify-between">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-4 md:py-5.5 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c8a96e] to-[#e8d09e] shadow-[0_4px_15px_rgba(200,169,110,0.3),inset_0_2px_4px_rgba(255,255,255,0.4)] flex items-center justify-center shrink-0">
-            <Bot className="w-5 h-5 text-[#0a0f1e]" strokeWidth={2.5} />
+        <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-[#c8a96e] to-[#e8d09e] shadow-[0_4px_15px_rgba(200,169,110,0.3),inset_0_2px_4px_rgba(255,255,255,0.4)] flex items-center justify-center shrink-0">
+            <Bot className="w-4 h-4 md:w-5 md:h-5 text-[#0a0f1e]" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col gap-[0.1rem]">
-            <div className={`text-lg font-extrabold tracking-tight leading-none transition-colors ${scrolled ? "text-[#0a0f1e]" : "text-white"}`}>
+            <div className={`text-[14px] md:text-lg font-extrabold tracking-tight leading-none transition-colors ${scrolled ? "text-[#0a0f1e]" : "text-white"}`}>
               Corporate <span className="text-[#c8a96e]">AI</span>
             </div>
-            <div className={`text-[10px] font-bold tracking-[0.15em] uppercase transition-colors ${scrolled ? "text-gray-500" : "text-white/60"}`}>
+            <div className={`text-[7px] md:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors ${scrolled ? "text-gray-500" : "text-white/60"}`}>
               Strategy Advisor
             </div>
           </div>
@@ -102,12 +89,12 @@ function Navbar() {
         </div>
 
         {/* CTA */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3 shrink-0">
           <Link href="/login"
-            className={`text-xs font-bold uppercase tracking-wider transition-colors hidden md:block ${scrolled ? "text-[#374151] hover:text-[#1a3a5c]" : "text-white/80 hover:text-white"}`}>
+            className={`text-[9px] md:text-xs font-bold uppercase tracking-wider transition-colors ${scrolled ? "text-[#374151] hover:text-[#1a3a5c]" : "text-white/80 hover:text-white"}`}>
             Sign In
           </Link>
-          <Link href="/register" className="btn-corp-primary text-xs" style={{ padding: "0.875rem 1.75rem" }}>
+          <Link href="/register" className="btn-corp-primary text-[8px] md:text-xs !px-2.5 !py-1.5 md:!px-7 md:!py-3.5">
             Get Started
           </Link>
         </div>
@@ -127,17 +114,17 @@ function Hero() {
       <div className="corp-hero-overlay" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-44 pb-32 w-full">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-52 md:pt-44 pb-32 w-full">
         <div className="max-w-2xl">
           {started && (
             <>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-[#c8a96e]/40 bg-[#c8a96e]/10 mb-6 animate-fadeInUp">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#c8a96e]" />
-                <span className="text-[#c8a96e] text-xs font-bold uppercase tracking-[0.15em]">Enterprise AI Strategy Platform</span>
+              <div className="inline-flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 border border-[#c8a96e]/40 bg-[#c8a96e]/10 mb-4 md:mb-6 animate-fadeInUp max-w-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c8a96e] shrink-0" />
+                <span className="text-[#c8a96e] text-[9px] md:text-xs font-bold uppercase tracking-[0.15em] leading-tight truncate">Enterprise AI Strategy Platform</span>
               </div>
 
               <h1 className="animate-fadeInUp animate-delay-100"
-                style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.75rem,5.5vw,5rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.15, marginBottom: "1.75rem" }}>
+                style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem,5.5vw,5rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.15, marginBottom: "1.75rem" }}>
                 Predict AI ROI<br />
                 <span style={{ color: "#c8a96e" }}>Before You Invest</span>
               </h1>
@@ -163,7 +150,7 @@ function Hero() {
 
       {/* Stats bar */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
-        <div className="max-w-[1280px] mx-auto px-6">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 bg-white shadow-2xl">
             {[
               { value: 2400, suffix: "+", label: "Strategy Reports" },
@@ -171,11 +158,11 @@ function Hero() {
               { value: 94, suffix: "%", label: "Model Accuracy" },
               { value: 50, suffix: "+", label: "Industries Covered" },
             ].map((stat, i) => (
-              <div key={i} className="py-8 px-8 text-center border-r border-gray-100 last:border-r-0">
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", fontWeight: 900, color: "#1a3a5c", lineHeight: 1 }}>
+              <div key={i} className={`py-4 md:py-8 px-2 md:px-8 text-center border-gray-100 md:border-b-0 ${i % 2 === 0 ? 'border-r' : ''} md:border-r md:last:border-r-0 ${i < 2 ? 'border-b' : ''}`}>
+                <div className="text-[1.8rem] md:text-[2.5rem] font-black text-[#1a3a5c] leading-none" style={{ fontFamily: "var(--font-display)" }}>
                   <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "0.4rem" }}>
+                <div className="text-[0.65rem] md:text-[0.8rem] font-bold text-[#6b7280] uppercase tracking-[0.1em] mt-1 md:mt-2">
                   {stat.label}
                 </div>
               </div>
