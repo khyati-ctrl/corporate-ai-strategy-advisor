@@ -94,8 +94,11 @@ function Navbar() {
             className={`text-[9px] md:text-xs font-bold uppercase tracking-wider transition-colors ${scrolled ? "text-[#374151] hover:text-[#1a3a5c]" : "text-white/80 hover:text-white"}`}>
             Sign In
           </Link>
-          <Link href="/register" className="btn-corp-primary text-[8px] md:text-xs !px-2.5 !py-1.5 md:!px-7 md:!py-3.5">
-            Get Started
+          <Link href="/register" className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] text-[8px] md:text-xs px-4 py-2 md:px-7 md:py-3 font-bold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
+            <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+              <div className="relative h-full w-8 bg-white/20" />
+            </div>
+            <span className="relative z-10 uppercase tracking-wider">Get Started</span>
           </Link>
         </div>
       </div>
@@ -136,11 +139,18 @@ function Hero() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-fadeInUp animate-delay-300">
-                <Link href="/register" className="btn-corp-primary flex items-center justify-center gap-2 w-full sm:w-auto">
-                  Start Free Assessment <ArrowRight className="w-4 h-4" />
+                <Link href="/register" className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5">
+                  <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                    <div className="relative h-full w-8 bg-white/20" />
+                  </div>
+                  <span className="relative z-10 text-[0.8rem] sm:text-[0.85rem] tracking-[0.1em] uppercase">Start Free Assessment</span>
+                  <div className="relative z-10 flex items-center justify-center bg-[#c8a96e] rounded-full w-5 h-5 sm:w-6 sm:h-6 shadow-sm transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight size={14} className="text-white" strokeWidth={3} />
+                  </div>
                 </Link>
-                <Link href="/dashboard" className="btn-corp-outline flex items-center justify-center gap-2 w-full sm:w-auto">
-                  Explore Dashboard <ChevronRight className="w-4 h-4" />
+                <Link href="/dashboard" className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-white/10 border border-white/20 px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-white backdrop-blur-sm shadow-sm transition-all duration-300 hover:bg-white/20 hover:border-white/40 hover:shadow-md hover:-translate-y-0.5">
+                  <span className="relative z-10 text-[0.8rem] sm:text-[0.85rem] tracking-[0.1em] uppercase">Explore Dashboard</span>
+                  <ChevronRight size={16} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
             </>

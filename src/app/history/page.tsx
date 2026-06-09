@@ -258,9 +258,13 @@ export default function HistoryPage() {
 
                       <Link 
                         href={`/analysis/${a.id}`} 
-                        className="flex items-center justify-center w-full gap-2 text-sm font-bold text-white bg-[#1a3a5c] hover:bg-[#122a44] transition-colors py-3 rounded-xl shadow-sm"
+                        className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] py-3.5 mt-2 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
                       >
-                        Inspect Report <ArrowUpRight size={16} />
+                        <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                          <div className="relative h-full w-8 bg-white/20" />
+                        </div>
+                        <span className="relative z-10 text-[0.8rem] tracking-[0.1em] uppercase">Inspect Report</span>
+                        <ArrowUpRight size={14} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </Link>
                     </div>
                   </motion.div>
@@ -321,9 +325,14 @@ export default function HistoryPage() {
                           <td className="py-4 px-6 text-right">
                             <Link 
                               href={`/analysis/${a.id}`} 
-                              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a3a5c] hover:text-white transition-colors bg-primary/10 hover:bg-[#1a3a5c] px-3 py-2 rounded-lg"
+                              className="group relative inline-flex items-center justify-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-4 py-2 font-bold text-white shadow-[0_2px_8px_rgba(26,58,92,0.2)] transition-all duration-300 hover:shadow-[0_4px_12px_rgba(26,58,92,0.3)] hover:-translate-y-0.5 text-[0.7rem] uppercase tracking-wider"
+                              style={{ textDecoration: "none" }}
                             >
-                              Inspect <ArrowUpRight className="w-3.5 h-3.5" />
+                              <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                                <div className="relative h-full w-4 bg-white/20" />
+                              </div>
+                              <span className="relative z-10">Inspect</span>
+                              <ArrowUpRight size={12} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </Link>
                           </td>
                         </tr>

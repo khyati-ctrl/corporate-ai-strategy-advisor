@@ -126,17 +126,13 @@ export default function ProfilePage() {
                 <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: "1.5rem" }}>
                   Unlock multi-tenant workspaces, high-priority model access, raw SHAP parameter weights, and REST API ingestion keys.
                 </p>
-                <button style={{
-                  width: "100%", padding: "0.9rem",
-                  background: "#c8a96e", color: "#ffffff",
-                  border: "none", cursor: "pointer",
-                  fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em",
-                  transition: "background 0.2s",
-                }}
-                  onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = "#b8944f"}
-                  onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = "#c8a96e"}
+                <button 
+                  className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#c8a96e] to-[#b8944f] px-6 py-3 font-bold text-white shadow-[0_4px_12px_rgba(200,169,110,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(200,169,110,0.4)] hover:-translate-y-0.5"
                 >
-                  Unlock Pro Access
+                  <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                    <div className="relative h-full w-8 bg-white/20" />
+                  </div>
+                  <span className="relative z-10 text-[0.8rem] tracking-[0.1em] uppercase">Unlock Pro Access</span>
                 </button>
               </div>
             </div>
@@ -189,14 +185,18 @@ export default function ProfilePage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
                   <button
                     onClick={handleSave}
-                    className="btn-premium-primary"
-                    style={{ padding: "0.875rem 1.75rem", fontSize: "0.82rem", letterSpacing: "0.08em", textTransform: "uppercase" }}
+                    className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
                   >
+                    <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                      <div className="relative h-full w-8 bg-white/20" />
+                    </div>
                     {saved ? (
-                      <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span className="relative z-10 flex items-center gap-2 text-[0.75rem] sm:text-[0.8rem] tracking-[0.1em] uppercase">
                         <Check size={16} /> Saved!
                       </span>
-                    ) : "Save Changes"}
+                    ) : (
+                      <span className="relative z-10 text-[0.75rem] sm:text-[0.8rem] tracking-[0.1em] uppercase">Save Changes</span>
+                    )}
                   </button>
                   {saved && (
                     <span style={{ fontSize: "0.875rem", color: "#10B981", fontWeight: 600 }}>
@@ -262,10 +262,9 @@ export default function ProfilePage() {
                 </div>
 
                 <button
-                  className="btn-premium-secondary"
-                  style={{ padding: "0.875rem 1.75rem", fontSize: "0.82rem", letterSpacing: "0.08em", textTransform: "uppercase" }}
+                  className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-white border-2 border-gray-200 px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-gray-700 shadow-sm transition-all duration-300 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5"
                 >
-                  Update Security Credentials
+                  <span className="relative z-10 text-[0.75rem] sm:text-[0.8rem] tracking-[0.1em] uppercase">Update Security Credentials</span>
                 </button>
               </Section>
 
@@ -286,18 +285,11 @@ export default function ProfilePage() {
                   Deleting this profile terminates access to all Strategy Advisor instances. All cached analyses,
                   reports, datasets, and API credentials will be permanently erased.
                 </p>
-                <button style={{
-                  display: "flex", alignItems: "center", gap: "0.5rem",
-                  padding: "0.625rem 1.5rem",
-                  background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.3)",
-                  color: "#ef4444", cursor: "pointer", fontSize: "0.72rem",
-                  fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em",
-                  transition: "all 0.2s",
-                }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(239,68,68,0.12)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(239,68,68,0.06)"; }}
+                <button
+                  className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-red-50 border-2 border-red-200 px-6 py-3 font-bold text-red-600 shadow-sm transition-all duration-300 hover:border-red-300 hover:bg-red-100 hover:shadow-md hover:-translate-y-0.5"
                 >
-                  <Trash2 size={14} /> Delete Account Profile
+                  <Trash2 size={16} className="relative z-10" />
+                  <span className="relative z-10 text-[0.75rem] tracking-[0.1em] uppercase">Delete Account Profile</span>
                 </button>
               </div>
             </div>

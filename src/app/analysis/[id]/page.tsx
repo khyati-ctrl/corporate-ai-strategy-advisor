@@ -149,14 +149,21 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
           actions={
             <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2.5">
               <Link href="/analysis/new"
-                className="btn-premium-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
-                style={{ padding: "0.75rem 1.5rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.06em", textDecoration: "none" }}>
-                <Plus size={16} /> New Run
+                className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-white border-2 border-gray-200 px-6 py-2.5 font-bold text-gray-700 shadow-sm transition-all duration-300 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5"
+                style={{ textDecoration: "none" }}>
+                <Plus size={16} className="relative z-10 transition-transform duration-300 group-hover:rotate-90" /> 
+                <span className="relative z-10 text-[0.75rem] tracking-[0.1em] uppercase">New Run</span>
               </Link>
               <button
-                className="btn-premium-primary flex items-center justify-center gap-2 w-full sm:w-auto"
-                style={{ padding: "0.75rem 1.5rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.06em", cursor: "pointer" }}>
-                <Download size={16} /> Export Brief
+                className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-6 py-2.5 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
+                style={{ cursor: "pointer" }}>
+                <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                  <div className="relative h-full w-8 bg-white/20" />
+                </div>
+                <div className="relative z-10 flex items-center justify-center bg-[#c8a96e] rounded-full w-5 h-5 shadow-sm transition-transform duration-300 group-hover:-translate-y-1">
+                  <Download size={12} className="text-white" strokeWidth={3} />
+                </div>
+                <span className="relative z-10 text-[0.75rem] tracking-[0.1em] uppercase">Export Brief</span>
               </button>
             </div>
           }

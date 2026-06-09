@@ -173,8 +173,9 @@ export default function DashboardPage() {
                 <p style={{ fontSize: "0.85rem", color: "#9ca3af", marginTop: "0.25rem" }}>Monitor and access recent corporate model evaluations</p>
               </div>
               <Link href="/history"
-                style={{ fontSize: "0.8rem", fontWeight: 700, color: "#1a3a5c", display: "flex", alignItems: "center", gap: "0.4rem", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                Browse History <ArrowUpRight size={14} />
+                className="group relative flex items-center justify-center gap-1.5 overflow-hidden rounded-full bg-white border border-gray-200 px-4 py-2 font-bold text-[#1a3a5c] shadow-sm transition-all duration-300 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5 text-xs uppercase tracking-wider"
+                style={{ textDecoration: "none" }}>
+                Browse History <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
 
@@ -221,25 +222,14 @@ export default function DashboardPage() {
                       </td>
                       <td style={{ padding: "1.1rem 1.25rem" }}>
                         <Link href={`/analysis/${a.id}`}
-                          style={{
-                            display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                            padding: "0.6rem 1.1rem",
-                            background: "#f9fafb", border: "1px solid #e5e7eb",
-                            fontSize: "0.8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em",
-                            color: "#1a3a5c", textDecoration: "none", transition: "all 0.2s",
-                          }}
-                          onMouseEnter={e => {
-                            (e.currentTarget as HTMLAnchorElement).style.background = "#1a3a5c";
-                            (e.currentTarget as HTMLAnchorElement).style.color = "#ffffff";
-                            (e.currentTarget as HTMLAnchorElement).style.borderColor = "#1a3a5c";
-                          }}
-                          onMouseLeave={e => {
-                            (e.currentTarget as HTMLAnchorElement).style.background = "#f9fafb";
-                            (e.currentTarget as HTMLAnchorElement).style.color = "#1a3a5c";
-                            (e.currentTarget as HTMLAnchorElement).style.borderColor = "#e5e7eb";
-                          }}
+                          className="group relative inline-flex items-center justify-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-4 py-2 font-bold text-white shadow-[0_2px_8px_rgba(26,58,92,0.2)] transition-all duration-300 hover:shadow-[0_4px_12px_rgba(26,58,92,0.3)] hover:-translate-y-0.5 text-[0.7rem] uppercase tracking-wider"
+                          style={{ textDecoration: "none" }}
                         >
-                          Inspect <ArrowUpRight size={14} />
+                          <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                            <div className="relative h-full w-4 bg-white/20" />
+                          </div>
+                          <span className="relative z-10">Inspect</span>
+                          <ArrowUpRight size={12} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </Link>
                       </td>
                     </tr>

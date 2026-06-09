@@ -460,38 +460,36 @@ export default function NewAnalysisPage() {
                   )}
 
                   {/* Navigation */}
-                  <div style={{
-                    display: "flex", justifyContent: "space-between", alignItems: "center",
-                    marginTop: "2.5rem", paddingTop: "1.5rem", borderTop: "1px solid #f3f4f6",
-                  }}>
+                  <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mt-10 pt-6 border-t border-gray-100 w-full">
                     {step > 1 ? (
                       <button onClick={() => setStep(step - 1)}
-                        className="btn-premium-secondary"
-                        style={{ padding: "0.875rem 1.75rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.08em", display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
-                        <ArrowLeft size={16} /> Back
+                        className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-white border-2 border-gray-200 px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-gray-700 shadow-sm transition-all duration-300 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5"
+                      >
+                        <ArrowLeft size={16} className="relative z-10 transition-transform duration-300 group-hover:-translate-x-1" />
+                        <span className="relative z-10 text-[0.75rem] sm:text-[0.8rem] tracking-[0.1em] uppercase">Back</span>
                       </button>
-                    ) : <div />}
+                    ) : <div className="hidden sm:block" />}
 
                     {step < 3 ? (
                       <button onClick={() => setStep(step + 1)}
-                        className="btn-premium-primary"
-                        style={{ padding: "0.875rem 2rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.08em", display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
-                        Next <ArrowRight size={16} />
+                        className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
+                      >
+                        <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                          <div className="relative h-full w-8 bg-white/20" />
+                        </div>
+                        <span className="relative z-10 text-[0.75rem] sm:text-[0.8rem] tracking-[0.1em] uppercase">Next</span>
+                        <div className="relative z-10 flex items-center justify-center bg-[#c8a96e] rounded-full w-5 h-5 sm:w-6 sm:h-6 shadow-sm transition-transform duration-300 group-hover:translate-x-1">
+                          <ArrowRight size={14} className="text-white" strokeWidth={3} />
+                        </div>
                       </button>
                     ) : (
                       <button onClick={handleSubmit}
-                        style={{
-                          display: "flex", alignItems: "center", gap: "0.6rem",
-                          padding: "1rem 2.5rem",
-                          background: "#c8a96e", color: "#ffffff",
-                          border: "2px solid #c8a96e",
-                          fontSize: "0.85rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em",
-                          cursor: "pointer", transition: "all 0.2s",
-                        }}
-                        onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = "#b8944f"}
-                        onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = "#c8a96e"}
+                        className="group relative flex items-center justify-center gap-2 w-full sm:w-auto overflow-hidden rounded-full bg-gradient-to-r from-[#c8a96e] to-[#b8944f] px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(200,169,110,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(200,169,110,0.4)] hover:-translate-y-0.5"
                       >
-                        🚀 Compute Strategy Projections
+                        <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                          <div className="relative h-full w-8 bg-white/20" />
+                        </div>
+                        <span className="relative z-10 text-[0.85rem] sm:text-[0.85rem] tracking-[0.1em] uppercase">🚀 Compute Strategy Projections</span>
                       </button>
                     )}
                   </div>
