@@ -147,25 +147,25 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
           title="Analysis Report"
           subtitle={`${r.industry} · ${r.company_size} · ${r.use_case} · ID: ${r.analysis_id}`}
           actions={
-            <div style={{ display: "flex", gap: "0.625rem" }}>
+            <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2.5">
               <Link href="/analysis/new"
-                className="btn-premium-secondary"
-                style={{ padding: "0.75rem 1.5rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
+                className="btn-premium-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
+                style={{ padding: "0.75rem 1.5rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.06em", textDecoration: "none" }}>
                 <Plus size={16} /> New Run
               </Link>
               <button
-                className="btn-premium-primary"
-                style={{ padding: "0.75rem 1.5rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.06em", display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
+                className="btn-premium-primary flex items-center justify-center gap-2 w-full sm:w-auto"
+                style={{ padding: "0.75rem 1.5rem", fontSize: "0.82rem", textTransform: "uppercase", letterSpacing: "0.06em", cursor: "pointer" }}>
                 <Download size={16} /> Export Brief
               </button>
             </div>
           }
         />
 
-        <div style={{ flex: 1, padding: "2.5rem", overflowY: "auto" }}>
+        <div className="flex-1 p-4 md:p-10 overflow-y-auto">
 
           {/* ── KPI Summary Row ─── */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem", marginBottom: "2rem" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {[
               { label: "Predicted ROI", value: `${r.roi_prediction.roi_predicted_pct}%`, icon: TrendingUp, accent: "#10B981" },
               { label: "Payback Period", value: `${r.roi_prediction.payback_period_months} months`, icon: Clock, accent: "#c8a96e" },
@@ -195,7 +195,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
           </div>
 
           {/* ── Tab Navigation ─── */}
-          <div style={{ borderBottom: "2px solid #e5e7eb", display: "flex", gap: "0", marginBottom: "2rem", background: "#ffffff" }}>
+          <div className="border-b-2 border-gray-200 flex overflow-x-auto whitespace-nowrap mb-8 bg-white" style={{ scrollbarWidth: "none" }}>
             {[
               { id: "roi", label: "ROI Projections", icon: TrendingUp },
               { id: "recommendations", label: "Strategic Roadmap", icon: Layers },
@@ -227,7 +227,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
 
           {/* ── ROI Tab ─── */}
           {activeTab === "roi" && (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.75rem" }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
               {/* Gauge */}
               <div style={{ ...card, display: "flex", flexDirection: "column" as const, alignItems: "center" }}>
                 <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", alignSelf: "flex-start", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "0.625rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -290,12 +290,12 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
               </div>
 
               {/* Readiness Breakdown */}
-              <div style={{ ...card, gridColumn: "span 2" }}>
+              <div className="col-span-1 lg:col-span-2" style={card}>
                 <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", marginBottom: "0.3rem", display: "flex", alignItems: "center", gap: "0.625rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                   <Gauge size={16} color="#1a3a5c" /> Dimensions Readiness Index
                 </h3>
                 <p style={{ fontSize: "0.85rem", color: "#9ca3af", marginBottom: "2rem" }}>Maturity scores measured on step sliders</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {r.readiness_breakdown.map(dim => {
                     const isHigh = dim.score >= 7.0;
                     const isMid = dim.score >= 5.0 && dim.score < 7.0;
@@ -380,7 +380,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
                 <p style={{ fontSize: "1rem", color: "#374151", lineHeight: 1.8 }}>{r.insights.executive_summary}</p>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Key Findings */}
                 <div style={{ ...card, borderTop: "3px solid #10B981" }}>
                   <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.625rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -417,7 +417,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
                 <h3 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", marginBottom: "1.25rem", display: "flex", alignItems: "center", gap: "0.625rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                   <Lightbulb size={16} color="#c8a96e" /> Strategic Capital Opportunities
                 </h3>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.5rem" }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {r.insights.opportunities.map((o, i) => (
                     <div key={i} style={{
                       padding: "1.75rem", background: "rgba(16,185,129,0.04)",

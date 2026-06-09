@@ -35,8 +35,8 @@ export default function TopBar({ title, subtitle, actions }: TopBarProps) {
       </div>
 
       {/* Actions + User */}
-      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-6 w-full md:w-auto mt-2 md:mt-0 justify-between sm:justify-start">
-        {actions && <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>{actions}</div>}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 w-full md:w-auto mt-2 md:mt-0">
+        {actions && <div className="flex items-center gap-2.5 w-full sm:w-auto">{actions}</div>}
 
         {/* Icon Toolbar */}
         <div className="flex items-center gap-2 sm:gap-3 border-l-2 border-gray-100 pl-3 sm:pl-6 hidden sm:flex">
