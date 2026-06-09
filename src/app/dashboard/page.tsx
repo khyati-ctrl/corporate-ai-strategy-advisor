@@ -87,9 +87,15 @@ export default function DashboardPage() {
           subtitle="Welcome back, Jane — here is your AI strategy overview"
           actions={
             <Link href="/analysis/new"
-              className="btn-premium-primary"
-              style={{ padding: "0.875rem 1.75rem", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.08em", display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-              <Plus size={16} /> New Analysis
+              className="group relative flex items-center justify-center gap-2.5 w-full sm:w-auto overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-6 py-3 sm:px-8 sm:py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
+              style={{ textDecoration: "none" }}>
+              <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                <div className="relative h-full w-8 bg-white/20" />
+              </div>
+              <div className="relative z-10 flex items-center justify-center bg-[#c8a96e] rounded-full w-5 h-5 sm:w-6 sm:h-6 shadow-sm transition-transform duration-300 group-hover:rotate-90">
+                <Plus size={14} className="text-white" strokeWidth={3} />
+              </div>
+              <span className="relative z-10 text-[0.75rem] sm:text-[0.8rem] tracking-[0.1em] uppercase">New Analysis</span>
             </Link>
           }
         />
