@@ -1,0 +1,142 @@
+"use client";
+
+import Link from "next/link";
+import { Bell, HelpCircle, Settings, ChevronDown } from "lucide-react";
+
+interface TopBarProps {
+  title: string;
+  subtitle?: string;
+  actions?: React.ReactNode;
+}
+
+export default function TopBar({ title, subtitle, actions }: TopBarProps) {
+  return (
+    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 p-4 pl-20 md:py-6 md:pr-9 md:pl-20 bg-white border-b border-gray-200">
+      {/* Breadcrumb / Title */}
+      <div>
+        {/* Small breadcrumb */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
+          <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+            Portal
+          </span>
+          <span style={{ color: "#d1d5db", fontSize: "0.72rem" }}>›</span>
+          <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#c8a96e", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+            {title}
+          </span>
+        </div>
+        <h1 style={{ fontSize: "1.6rem", fontWeight: 800, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1.25 }}>
+          {title}
+        </h1>
+        {subtitle && (
+          <p style={{ fontSize: "0.85rem", color: "#6b7280", marginTop: "0.3rem", fontWeight: 500 }}>
+            {subtitle}
+          </p>
+        )}
+      </div>
+
+      {/* Actions + User */}
+      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-6 w-full md:w-auto mt-2 md:mt-0 justify-between sm:justify-start">
+        {actions && <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>{actions}</div>}
+
+        {/* Icon Toolbar */}
+        <div className="flex items-center gap-2 sm:gap-3 border-l-2 border-gray-100 pl-3 sm:pl-6 hidden sm:flex">
+          {[
+            { icon: Bell, hasNotif: true },
+            { icon: HelpCircle, hasNotif: false },
+            { icon: Settings, hasNotif: false, href: "/profile" }
+          ].map((item, i) => {
+            const Icon = item.icon;
+            const content = (
+              <button
+                key={i}
+                style={{
+                  padding: "0.5rem", color: "#6b7280", cursor: "pointer",
+                  background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: "50%",
+                  position: "relative", display: "flex", alignItems: "center", justifyContent: "center",
+                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = "#f9fafb";
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = "#d1d5db";
+                  (e.currentTarget as HTMLButtonElement).style.color = "#111827";
+                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 6px rgba(0,0,0,0.05)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = "#ffffff";
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = "#e5e7eb";
+                  (e.currentTarget as HTMLButtonElement).style.color = "#6b7280";
+                  (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
+                }}
+              >
+                <Icon size={18} strokeWidth={2.5} />
+                {item.hasNotif && (
+                  <span style={{
+                    position: "absolute", top: "-2px", right: "-2px",
+                    width: "12px", height: "12px", borderRadius: "50%",
+                    background: "#ef4444", border: "2px solid #ffffff",
+                    boxShadow: "0 2px 4px rgba(239, 68, 68, 0.3)"
+                  }} />
+                )}
+              </button>
+            );
+            return item.href ? (
+              <Link key={i} href={item.href} style={{ textDecoration: "none" }}>
+                {content}
+              </Link>
+            ) : content;
+          })}
+        </div>
+
+        {/* User Card */}
+        <Link href="/profile" style={{ textDecoration: "none" }}>
+          <div style={{
+            display: "flex", alignItems: "center", gap: "0.875rem",
+            padding: "0.375rem 1.25rem 0.375rem 0.375rem",
+            background: "#ffffff", border: "1px solid #e5e7eb",
+            borderRadius: "9999px",
+            boxShadow: "0 2px 8px -2px rgba(0, 0, 0, 0.05)",
+            cursor: "pointer", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLDivElement).style.borderColor = "#d1d5db";
+              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
+              (e.currentTarget as HTMLDivElement).style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLDivElement).style.borderColor = "#e5e7eb";
+              (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px -2px rgba(0, 0, 0, 0.05)";
+              (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+            }}
+          >
+            <div style={{
+              width: "40px", height: "40px",
+              background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
+              borderRadius: "50%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "0.875rem", fontWeight: 700, color: "#ffffff",
+              boxShadow: "inset 0 -2px 4px rgba(0,0,0,0.2), 0 2px 5px rgba(59, 130, 246, 0.3)",
+              letterSpacing: "0.5px"
+            }}>
+              JD
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" as const, justifyContent: "center" }}>
+              <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#111827", lineHeight: 1.2 }}>Jane Doe</span>
+              <span style={{ fontSize: "0.75rem", color: "#6b7280", fontWeight: 500 }}>Acme Corp</span>
+            </div>
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              width: "24px", height: "24px", borderRadius: "50%",
+              background: "#f3f4f6", marginLeft: "0.25rem",
+              transition: "background 0.2s"
+            }}>
+              <ChevronDown size={14} color="#6b7280" strokeWidth={3} />
+            </div>
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+}
