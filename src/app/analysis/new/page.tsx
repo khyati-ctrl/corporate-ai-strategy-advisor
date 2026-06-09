@@ -103,7 +103,7 @@ function ScoreSlider({ label, description, value, onChange }: {
 function StepProgress({ currentStep }: { currentStep: number }) {
   const steps = ["Company Profile", "AI Readiness", "Initiative Setup"];
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "2.5rem", padding: "2rem 2.5rem", background: "#ffffff", border: "1px solid #e5e7eb" }}>
+    <div className="flex items-center justify-center mb-6 md:mb-10 p-4 md:p-8 md:px-10 bg-white border border-gray-200">
       {steps.map((step, i) => {
         const num = i + 1;
         const isActive = num === currentStep;
@@ -214,8 +214,8 @@ export default function NewAnalysisPage() {
       <main style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
         <TopBar title="New Analysis" subtitle="Complete the 3-step wizard to evaluate your AI initiative" />
 
-        <div style={{ flex: 1, padding: "2.5rem", overflowY: "auto" }}>
-          <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+        <div className="flex-1 p-4 md:p-10 overflow-y-auto">
+          <div className="max-w-[900px] mx-auto">
             <StepProgress currentStep={step} />
 
             <AnimatePresence mode="wait">
@@ -253,7 +253,7 @@ export default function NewAnalysisPage() {
                   key={`step-${step}`}
                   initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }} transition={{ duration: 0.25 }}
-                  style={{ background: "#ffffff", border: "1px solid #e5e7eb", padding: "2.75rem" }}
+                  className="bg-white border border-gray-200 p-5 md:p-11"
                 >
                   {/* Step 1: Company Profile */}
                   {step === 1 && (
@@ -267,7 +267,7 @@ export default function NewAnalysisPage() {
                         </p>
                       </div>
 
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         {/* Industry */}
                         <div>
                           <label className="form-label">Industry Sector *</label>
@@ -301,7 +301,7 @@ export default function NewAnalysisPage() {
                       {/* Company Size */}
                       <div style={{ marginBottom: "1.5rem" }}>
                         <label className="form-label">Company Size Scale *</label>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {companySizes.map(size => {
                             const isSelected = company.company_size === size;
                             return (
@@ -322,7 +322,7 @@ export default function NewAnalysisPage() {
                         </div>
                       </div>
 
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                           <label className="form-label">Annual Revenue (USD Millions)</label>
                           <div style={{ position: "relative" }}>
@@ -393,7 +393,7 @@ export default function NewAnalysisPage() {
                       {/* Use Case */}
                       <div style={{ marginBottom: "1.75rem" }}>
                         <label className="form-label">AI Use Case *</label>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.875rem" }}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                           {useCases.map(uc => {
                             const isSelected = initiative.use_case === uc;
                             return (
@@ -414,7 +414,7 @@ export default function NewAnalysisPage() {
                         </div>
                       </div>
 
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.75rem" }}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-7">
                         <div>
                           <label className="form-label">Investment Budget (USD)</label>
                           <div style={{ position: "relative" }}>
@@ -442,7 +442,7 @@ export default function NewAnalysisPage() {
                         <h4 style={{ fontSize: "0.78rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.1rem" }}>
                           <Layers size={15} /> Assessment Summary
                         </h4>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.1rem" }}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {[
                             { label: "Industry Sector", value: company.industry_sector || "—" },
                             { label: "Use Case", value: initiative.use_case || "—" },

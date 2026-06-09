@@ -120,7 +120,7 @@ function Hero() {
             <>
               <div className="inline-flex items-center gap-2 px-2 md:px-3 py-1 md:py-1.5 border border-[#c8a96e]/40 bg-[#c8a96e]/10 mb-4 md:mb-6 animate-fadeInUp max-w-full">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#c8a96e] shrink-0" />
-                <span className="text-[#c8a96e] text-[9px] md:text-xs font-bold uppercase tracking-[0.15em] leading-tight truncate">Enterprise AI Strategy Platform</span>
+                <span className="text-[#d5b476] text-[9px] md:text-xs font-bold uppercase tracking-[0.15em] leading-tight truncate">Enterprise AI Strategy Platform</span>
               </div>
 
               <h1 className="animate-fadeInUp animate-delay-100"
