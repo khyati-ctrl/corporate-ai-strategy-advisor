@@ -114,7 +114,7 @@ function Hero() {
       <div className="corp-hero-overlay" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-52 md:pt-44 pb-32 w-full">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 pt-32 md:pt-44 pb-56 md:pb-32 w-full">
         <div className="max-w-2xl">
           {started && (
             <>
@@ -135,11 +135,11 @@ function Hero() {
                 run predictive ROI projections, and get boardroom-ready reports — powered by ML.
               </p>
 
-              <div className="flex flex-wrap gap-4 animate-fadeInUp animate-delay-300">
-                <Link href="/register" className="btn-corp-primary flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row gap-4 animate-fadeInUp animate-delay-300">
+                <Link href="/register" className="btn-corp-primary flex items-center justify-center gap-2 w-full sm:w-auto">
                   Start Free Assessment <ArrowRight className="w-4 h-4" />
                 </Link>
-                <Link href="/dashboard" className="btn-corp-outline flex items-center gap-2">
+                <Link href="/dashboard" className="btn-corp-outline flex items-center justify-center gap-2 w-full sm:w-auto">
                   Explore Dashboard <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
