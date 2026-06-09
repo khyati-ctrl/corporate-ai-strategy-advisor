@@ -14,10 +14,9 @@
 
 ```
 corporate-ai-advisor/
-├── frontend/          # Next.js 14 web application
-│   ├── src/app/       # App Router, Pages, and Layouts
-│   ├── src/components/# Reusable UI Components
-│   └── public/        # Static assets (Images, SVGs)
+├── src/app/           # App Router, Pages, and Layouts
+├── src/components/    # Reusable UI Components
+├── public/            # Static assets (Images, SVGs)
 ├── .github/           # CI/CD workflows and templates
 └── README.md          # Project documentation
 ```
@@ -32,7 +31,6 @@ corporate-ai-advisor/
 
 ### Running the App
 ```bash
-cd frontend
 npm install
 npm run dev
 # → http://localhost:3000

@@ -6,9 +6,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Next.js
-frontend/.next/
-frontend/out/
-frontend/.vercel
+.next/
+out/
+.vercel
 
 # Environment files
 .env
