@@ -35,11 +35,61 @@ export default function TopBar({ title, subtitle, actions }: TopBarProps) {
       </div>
 
       {/* Actions + User */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 w-full md:w-auto mt-2 md:mt-0">
-        {actions && <div className="flex items-center gap-2.5 w-full sm:w-auto">{actions}</div>}
+      <div className="absolute top-4 right-4 flex flex-col items-end gap-3 sm:static sm:flex-row sm:items-center sm:gap-6 z-20">
+        
+        {/* User Card */}
+        <div className="order-1 sm:order-3">
+          <Link href="/profile" style={{ textDecoration: "none" }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "0.875rem",
+              background: "#ffffff", border: "1px solid #e5e7eb",
+              borderRadius: "9999px",
+              boxShadow: "0 2px 8px -2px rgba(0, 0, 0, 0.05)",
+              cursor: "pointer", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
+              className="p-1 sm:py-1.5 sm:px-5 sm:pl-1.5"
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = "#d1d5db";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
+                (e.currentTarget as HTMLDivElement).style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = "#e5e7eb";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px -2px rgba(0, 0, 0, 0.05)";
+                (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+              }}
+            >
+              <div style={{
+                width: "40px", height: "40px",
+                background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
+                borderRadius: "50%",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "0.875rem", fontWeight: 700, color: "#ffffff",
+                boxShadow: "inset 0 -2px 4px rgba(0,0,0,0.2), 0 2px 5px rgba(59, 130, 246, 0.3)",
+                letterSpacing: "0.5px", flexShrink: 0
+              }}>
+                JD
+              </div>
+              <div className="hidden sm:flex flex-col justify-center">
+                <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#111827", lineHeight: 1.2 }}>Jane Doe</span>
+                <span style={{ fontSize: "0.75rem", color: "#6b7280", fontWeight: 500 }}>Acme Corp</span>
+              </div>
+              <div className="hidden sm:flex items-center justify-center" style={{
+                width: "24px", height: "24px", borderRadius: "50%",
+                background: "#f3f4f6", marginLeft: "0.25rem",
+                transition: "background 0.2s"
+              }}>
+                <ChevronDown size={14} color="#6b7280" strokeWidth={3} />
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        {/* Actions */}
+        {actions && <div className="order-2 sm:order-1 flex flex-col sm:flex-row items-end sm:items-center gap-2.5">{actions}</div>}
 
         {/* Icon Toolbar */}
-        <div className="flex items-center gap-2 sm:gap-3 border-l-2 border-gray-100 pl-3 sm:pl-6 hidden sm:flex">
+        <div className="order-3 sm:order-2 flex items-center gap-2 sm:gap-3 sm:border-l-2 sm:border-gray-100 sm:pl-6 hidden sm:flex">
           {[
             { icon: Bell, hasNotif: true },
             { icon: HelpCircle, hasNotif: false },
@@ -90,53 +140,6 @@ export default function TopBar({ title, subtitle, actions }: TopBarProps) {
           })}
         </div>
 
-        {/* User Card */}
-        <div className="absolute top-4 right-4 md:static md:top-auto md:right-auto">
-          <Link href="/profile" style={{ textDecoration: "none" }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: "0.875rem",
-              background: "#ffffff", border: "1px solid #e5e7eb",
-              borderRadius: "9999px",
-              boxShadow: "0 2px 8px -2px rgba(0, 0, 0, 0.05)",
-              cursor: "pointer", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-            }}
-              className="p-1 sm:py-1.5 sm:px-5 sm:pl-1.5"
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "#d1d5db";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
-                (e.currentTarget as HTMLDivElement).style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "#e5e7eb";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px -2px rgba(0, 0, 0, 0.05)";
-                (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-              }}
-            >
-              <div style={{
-                width: "40px", height: "40px",
-                background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
-                borderRadius: "50%",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "0.875rem", fontWeight: 700, color: "#ffffff",
-                boxShadow: "inset 0 -2px 4px rgba(0,0,0,0.2), 0 2px 5px rgba(59, 130, 246, 0.3)",
-                letterSpacing: "0.5px", flexShrink: 0
-              }}>
-                JD
-              </div>
-              <div className="hidden sm:flex flex-col justify-center">
-                <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "#111827", lineHeight: 1.2 }}>Jane Doe</span>
-                <span style={{ fontSize: "0.75rem", color: "#6b7280", fontWeight: 500 }}>Acme Corp</span>
-              </div>
-              <div className="hidden sm:flex items-center justify-center" style={{
-                width: "24px", height: "24px", borderRadius: "50%",
-                background: "#f3f4f6", marginLeft: "0.25rem",
-                transition: "background 0.2s"
-              }}>
-                <ChevronDown size={14} color="#6b7280" strokeWidth={3} />
-              </div>
-            </div>
-          </Link>
-        </div>
       </div>
     </div>
   );
