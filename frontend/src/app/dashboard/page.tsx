@@ -1,245 +1,519 @@
 "use client";
-
 import Link from "next/link";
-import Sidebar from "@/components/Sidebar";
-import TopBar from "@/components/TopBar";
 import {
-  LineChart, Line, AreaChart, Area, RadarChart, Radar, PolarGrid,
-  PolarAngleAxis, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  LineChart,
+  Line,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Tooltip,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Legend,
 } from "recharts";
-import {
-  BarChart3, TrendingUp, Gauge, FileText, Plus, ArrowUpRight,
-  Clock, CheckCircle2, Activity
-} from "lucide-react";
+import KPICard from "@/components/KPICard";
+import TrendSection from "@/components/TrendSection";
+import AIChatbot from "@/components/AIChatbot";
 
-// ─── Mock Data ─────────────────────────────────────────────────────────────────
-const roiTrendData = [
-  { month: "Jan", roi: 98 },
-  { month: "Feb", roi: 115 },
-  { month: "Mar", roi: 89 },
-  { month: "Apr", roi: 142 },
-  { month: "May", roi: 198 },
-  { month: "Jun", roi: 142 },
+/* ─── Data ────────────────────────────────────────────────────────────────── */
+const kpis = [
+  {
+    title: "AI Readiness",
+    value: "68.3",
+    change: "4.2 pts",
+    changePositive: true,
+    icon: "🧠",
+    accentColor: "#1d4ed8",
+    sub: "vs last quarter",
+  },
+  {
+    title: "Market Opportunity",
+    value: "$2.4B",
+    change: "12%",
+    changePositive: true,
+    icon: "🌐",
+    accentColor: "#7c3aed",
+    sub: "addressable market",
+  },
+  {
+    title: "Revenue Growth",
+    value: "+18%",
+    change: "3%",
+    changePositive: true,
+    icon: "📈",
+    accentColor: "#059669",
+    sub: "AI-attributed lift",
+  },
+  {
+    title: "Automation Impact",
+    value: "34%",
+    change: "8%",
+    changePositive: true,
+    icon: "⚙️",
+    accentColor: "#0891b2",
+    sub: "tasks automated",
+  },
+  {
+    title: "Risk Score",
+    value: "Low",
+    change: "2 pts",
+    changePositive: true,
+    icon: "🛡️",
+    accentColor: "#d97706",
+    sub: "adoption risk",
+  },
+];
+
+const roiTrend = [
+  { month: "Jan", roi: 112 },
+  { month: "Feb", roi: 125 },
+  { month: "Mar", roi: 138 },
+  { month: "Apr", roi: 131 },
+  { month: "May", roi: 148 },
+  { month: "Jun", roi: 142.5 },
 ];
 
 const radarData = [
-  { dimension: "Data", score: 75 },
-  { dimension: "Talent", score: 60 },
-  { dimension: "Leadership", score: 80 },
-  { dimension: "Tech Stack", score: 70 },
-  { dimension: "Change Mgmt", score: 55 },
-  { dimension: "Data Quality", score: 70 },
+  { axis: "Data Infra", value: 72 },
+  { axis: "Talent", value: 65 },
+  { axis: "Strategy", value: 80 },
+  { axis: "Budget", value: 58 },
+  { axis: "Culture", value: 70 },
+  { axis: "Security", value: 75 },
 ];
 
 const recentAnalyses = [
-  { id: "demo-001", date: "Jun 7, 2026", industry: "Healthcare", useCase: "Predictive Analytics", roi: 142.5, readiness: 68.3 },
-  { id: "demo-002", date: "May 20, 2026", industry: "Financial Services", useCase: "Fraud Detection", roi: 198.3, readiness: 79.1 },
-  { id: "demo-003", date: "Apr 15, 2026", industry: "Retail & E-Commerce", useCase: "Demand Forecasting", roi: 89.7, readiness: 55.4 },
+  {
+    date: "Jun 7, 2026",
+    industry: "Healthcare",
+    useCase: "Predictive Analytics",
+    roi: "142.5%",
+    readiness: 68.3,
+    id: "demo-001",
+  },
+  {
+    date: "May 20, 2026",
+    industry: "Financial Services",
+    useCase: "Fraud Detection",
+    roi: "198.3%",
+    readiness: 79.1,
+    id: "demo-002",
+  },
+  {
+    date: "Apr 15, 2026",
+    industry: "Retail & E-Commerce",
+    useCase: "Demand Forecasting",
+    roi: "89.7%",
+    readiness: 55.4,
+    id: "demo-003",
+  },
 ];
 
-// ─── Stat Card ─────────────────────────────────────────────────────────────────
-function StatCard({ icon: Icon, label, value, change, accent }: {
-  icon: any; label: string; value: string; change?: string; accent: string;
-}) {
+/* ─── Custom tooltip ──────────────────────────────────────────────────────── */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Tip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
   return (
-    <div style={{
-      background: "#ffffff", border: "1px solid #e5e7eb",
-      padding: "2rem", borderTop: `3px solid ${accent}`,
-      transition: "box-shadow 0.25s",
-    }}
-      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(0,0,0,0.07)"}
-      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "none"}
+    <div
+      style={{
+        background: "#080f1e",
+        border: "1px solid #1e3a5f",
+        borderRadius: 10,
+        padding: "10px 14px",
+        fontSize: 12,
+      }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <div>
-          <p style={{ fontSize: "0.75rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.625rem" }}>{label}</p>
-          <h3 style={{ fontSize: "2.25rem", fontWeight: 900, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1 }}>{value}</h3>
-          {change && (
-            <div style={{ marginTop: "0.625rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ fontSize: "0.85rem", fontWeight: 800, color: "#10B981" }}>↑ {change}</span>
-              <span style={{ fontSize: "0.78rem", color: "#9ca3af" }}>vs last month</span>
-            </div>
-          )}
-        </div>
-        <div style={{
-          width: "48px", height: "48px",
-          background: `${accent}14`, border: `1px solid ${accent}30`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <Icon size={22} color={accent} />
-        </div>
-      </div>
+      <p style={{ color: "#93c5fd", fontWeight: 700, margin: "0 0 6px" }}>
+        {label}
+      </p>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      {payload.map((p: any) => (
+        <p key={p.name} style={{ color: p.color, margin: "2px 0" }}>
+          {p.name}: <strong>{p.value}%</strong>
+        </p>
+      ))}
     </div>
   );
-}
+};
 
-// ─── Dashboard Page ────────────────────────────────────────────────────────────
+/* ─── Page ────────────────────────────────────────────────────────────────── */
 export default function DashboardPage() {
-  const card = { background: "#ffffff", border: "1px solid #e5e7eb", padding: "2rem" };
-
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
-      <Sidebar />
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#060d1a",
+        padding: "32px 36px 80px",
+        fontFamily:
+          "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      }}
+    >
+      {/* Breadcrumb */}
+      <p style={{ color: "#334155", fontSize: 13, margin: "0 0 20px" }}>
+        Portal ›{" "}
+        <span style={{ color: "#60a5fa" }}>Dashboard</span>
+      </p>
 
-      <main style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
-        <TopBar
-          title="Dashboard"
-          subtitle="Welcome back, Jane — here is your AI strategy overview"
-          actions={
-            <Link href="/analysis/new"
-              className="group relative flex items-center justify-center sm:gap-2.5 w-10 h-10 sm:w-auto sm:h-auto overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] sm:px-8 sm:py-3.5 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
-              style={{ textDecoration: "none" }}>
-              <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-                <div className="relative h-full w-8 bg-white/20" />
-              </div>
-              <div className="relative z-10 flex items-center justify-center sm:bg-[#c8a96e] rounded-full w-full h-full sm:w-6 sm:h-6 sm:shadow-sm transition-transform duration-300 group-hover:rotate-90">
-                <Plus size={20} className="text-white sm:w-[14px] sm:h-[14px]" strokeWidth={2.5} />
-              </div>
-              <span className="relative z-10 hidden sm:inline text-[0.8rem] tracking-[0.1em] uppercase">New Analysis</span>
-            </Link>
-          }
-        />
-
-        <div className="flex-1 p-4 sm:p-6 lg:p-10 overflow-y-auto w-full max-w-[100vw]">
-
-          {/* Stats Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 w-full">
-            <StatCard icon={BarChart3} label="Total Analyses" value="12" change="25%" accent="#1a3a5c" />
-            <StatCard icon={TrendingUp} label="Avg Predicted ROI" value="142.5%" change="18%" accent="#10B981" />
-            <StatCard icon={Gauge} label="Last Readiness" value="68.3" accent="#c8a96e" />
-            <StatCard icon={FileText} label="Reports Exported" value="5" change="12%" accent="#f59e0b" />
-          </div>
-
-          {/* Charts Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-7 mb-8 w-full">
-            {/* ROI Trend */}
-            <div style={card}>
-              <div style={{ marginBottom: "1.5rem" }}>
-                <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", textTransform: "uppercase", letterSpacing: "0.06em" }}>ROI Prediction Trend</h2>
-                <p style={{ fontSize: "0.85rem", color: "#9ca3af", marginTop: "0.25rem" }}>Average calculated return percentage over recent cycles</p>
-              </div>
-              <div style={{ height: "300px" }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={roiTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="roiGradCorp" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#1a3a5c" stopOpacity={0.15} />
-                        <stop offset="95%" stopColor="#1a3a5c" stopOpacity={0.0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.04)" />
-                    <XAxis dataKey="month" tick={{ fill: "#9ca3af", fontSize: 11, fontWeight: 600 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: "#9ca3af", fontSize: 11, fontWeight: 600 }} axisLine={false} tickLine={false} unit="%" />
-                    <Tooltip
-                      contentStyle={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "2px", boxShadow: "0 4px 12px rgba(0,0,0,0.08)", fontSize: "12px" }}
-                      labelStyle={{ color: "#111827", fontWeight: 700 }}
-                      itemStyle={{ color: "#1a3a5c", fontWeight: 600 }}
-                    />
-                    <Area type="monotone" dataKey="roi" stroke="#1a3a5c" strokeWidth={2.5} fill="url(#roiGradCorp)"
-                      dot={{ fill: "#1a3a5c", r: 4, strokeWidth: 2, stroke: "#fff" }}
-                      activeDot={{ r: 5, strokeWidth: 0, fill: "#c8a96e" }} />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Radar */}
-            <div style={card}>
-              <div style={{ marginBottom: "1.5rem" }}>
-                <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", textTransform: "uppercase", letterSpacing: "0.06em" }}>AI Readiness Radar</h2>
-                <p style={{ fontSize: "0.85rem", color: "#9ca3af", marginTop: "0.25rem" }}>Assessment ratings across 6 operational vectors</p>
-              </div>
-              <div style={{ height: "300px" }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="75%">
-                    <PolarGrid stroke="rgba(0,0,0,0.06)" />
-                    <PolarAngleAxis dataKey="dimension" tick={{ fill: "#374151", fontSize: 11, fontWeight: 700 }} />
-                    <Radar name="Readiness" dataKey="score" stroke="#1a3a5c" fill="#c8a96e" fillOpacity={0.1} strokeWidth={2} />
-                    <Tooltip
-                      contentStyle={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "2px", fontSize: "12px" }}
-                      itemStyle={{ color: "#1a3a5c", fontWeight: 600 }}
-                    />
-                  </RadarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Analyses Table */}
-          <div style={card}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", paddingBottom: "1rem", borderBottom: "1px solid #f3f4f6" }}>
-              <div>
-                <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "#111827", textTransform: "uppercase", letterSpacing: "0.06em" }}>Recent Strategic Analyses</h2>
-                <p style={{ fontSize: "0.85rem", color: "#9ca3af", marginTop: "0.25rem" }}>Monitor and access recent corporate model evaluations</p>
-              </div>
-              <Link href="/history"
-                className="group relative flex items-center justify-center gap-1.5 overflow-hidden rounded-full bg-white border border-gray-200 px-4 py-2 font-bold text-[#1a3a5c] shadow-sm transition-all duration-300 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md hover:-translate-y-0.5 text-xs uppercase tracking-wider"
-                style={{ textDecoration: "none" }}>
-                Browse History <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-            </div>
-
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr style={{ borderBottom: "1px solid #f3f4f6" }}>
-                    {["Date", "Industry Sector", "AI Use Case", "Predicted ROI", "Readiness", "Status", "Actions"].map(h => (
-                      <th key={h} style={{ padding: "1rem 1.25rem", fontSize: "0.75rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "left" }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentAnalyses.map((a, i) => (
-                    <tr key={a.id}
-                      style={{ borderBottom: i < recentAnalyses.length - 1 ? "1px solid #f9fafb" : "none" }}
-                      onMouseEnter={e => (e.currentTarget as HTMLTableRowElement).style.background = "#fafafa"}
-                      onMouseLeave={e => (e.currentTarget as HTMLTableRowElement).style.background = "transparent"}
-                    >
-                      <td style={{ padding: "1.1rem 1.25rem", fontSize: "0.85rem", color: "#9ca3af", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                        <Clock size={14} /> {a.date}
-                      </td>
-                      <td style={{ padding: "1.1rem 1.25rem", fontSize: "0.95rem", fontWeight: 700, color: "#111827" }}>{a.industry}</td>
-                      <td style={{ padding: "1.1rem 1.25rem", fontSize: "0.88rem", color: "#374151" }}>{a.useCase}</td>
-                      <td style={{ padding: "1.1rem 1.25rem", fontSize: "1.05rem", fontWeight: 900, color: "#10B981", fontFamily: "var(--font-display)" }}>{a.roi}%</td>
-                      <td style={{ padding: "1.1rem 1.25rem" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                          <div style={{ width: "80px", height: "5px", background: "#f3f4f6", overflow: "hidden" }}>
-                            <div style={{ width: `${a.readiness}%`, height: "100%", background: "linear-gradient(90deg, #1a3a5c, #c8a96e)" }} />
-                          </div>
-                          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "#374151" }}>{a.readiness}</span>
-                        </div>
-                      </td>
-                      <td style={{ padding: "1.1rem 1.25rem" }}>
-                        <span style={{
-                          display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                          padding: "0.35rem 0.8rem",
-                          background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)",
-                          fontSize: "0.72rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em",
-                          color: "#10B981",
-                        }}>
-                          <CheckCircle2 size={12} /> Ready
-                        </span>
-                      </td>
-                      <td style={{ padding: "1.1rem 1.25rem" }}>
-                        <Link href={`/analysis/${a.id}`}
-                          className="group relative inline-flex items-center justify-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] px-4 py-2 font-bold text-white shadow-[0_2px_8px_rgba(26,58,92,0.2)] transition-all duration-300 hover:shadow-[0_4px_12px_rgba(26,58,92,0.3)] hover:-translate-y-0.5 text-[0.7rem] uppercase tracking-wider"
-                          style={{ textDecoration: "none" }}
-                        >
-                          <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-                            <div className="relative h-full w-4 bg-white/20" />
-                          </div>
-                          <span className="relative z-10">Inspect</span>
-                          <ArrowUpRight size={12} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+      {/* Header */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: 28,
+        }}
+      >
+        <div>
+          <h1
+            style={{
+              color: "#f1f5f9",
+              fontSize: 26,
+              fontWeight: 800,
+              margin: 0,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Dashboard
+          </h1>
+          <p style={{ color: "#475569", fontSize: 14, margin: "6px 0 0" }}>
+            Welcome back, Jane — here is your AI strategy overview
+          </p>
         </div>
-      </main>
+        <Link
+          href="/analysis/new"
+          style={{
+            background: "linear-gradient(135deg,#1d4ed8,#7c3aed)",
+            color: "#fff",
+            padding: "11px 22px",
+            borderRadius: 10,
+            fontWeight: 600,
+            fontSize: 14,
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+          }}
+        >
+          + New Analysis
+        </Link>
+      </div>
+
+      {/* KPI cards */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5,1fr)",
+          gap: 14,
+          marginBottom: 28,
+        }}
+      >
+        {kpis.map((k) => (
+          <KPICard key={k.title} {...k} />
+        ))}
+      </div>
+
+      {/* ROI trend + radar */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1.6fr 1fr",
+          gap: 18,
+          marginBottom: 28,
+        }}
+      >
+        {/* ROI trend */}
+        <div
+          style={{
+            background: "#080f1e",
+            border: "1px solid #111c30",
+            borderRadius: 14,
+            padding: "22px 22px 18px",
+          }}
+        >
+          <h3
+            style={{
+              color: "#f1f5f9",
+              fontSize: 15,
+              fontWeight: 700,
+              margin: "0 0 3px",
+            }}
+          >
+            ROI Prediction Trend
+          </h3>
+          <p
+            style={{ color: "#475569", fontSize: 12, margin: "0 0 18px" }}
+          >
+            Average calculated return percentage over recent cycles
+          </p>
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={roiTrend}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#111c30" />
+              <XAxis
+                dataKey="month"
+                tick={{ fill: "#475569", fontSize: 11 }}
+                axisLine={{ stroke: "#1e293b" }}
+                tickLine={false}
+              />
+              <YAxis
+                tick={{ fill: "#475569", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+                unit="%"
+              />
+              <Tooltip content={<Tip />} />
+              <Legend
+                wrapperStyle={{
+                  fontSize: 12,
+                  color: "#64748b",
+                  paddingTop: 8,
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="roi"
+                name="Predicted ROI"
+                stroke="#1d4ed8"
+                strokeWidth={2.5}
+                dot={{ fill: "#1d4ed8", r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Radar */}
+        <div
+          style={{
+            background: "#080f1e",
+            border: "1px solid #111c30",
+            borderRadius: 14,
+            padding: "22px 22px 18px",
+          }}
+        >
+          <h3
+            style={{
+              color: "#f1f5f9",
+              fontSize: 15,
+              fontWeight: 700,
+              margin: "0 0 3px",
+            }}
+          >
+            AI Readiness Radar
+          </h3>
+          <p
+            style={{ color: "#475569", fontSize: 12, margin: "0 0 18px" }}
+          >
+            Assessment ratings across 6 operational vectors
+          </p>
+          <ResponsiveContainer width="100%" height={220}>
+            <RadarChart data={radarData}>
+              <PolarGrid stroke="#1e293b" />
+              <PolarAngleAxis
+                dataKey="axis"
+                tick={{ fill: "#475569", fontSize: 11 }}
+              />
+              <PolarRadiusAxis
+                domain={[0, 100]}
+                tick={{ fill: "#334155", fontSize: 10 }}
+                axisLine={false}
+              />
+              <Radar
+                name="Readiness"
+                dataKey="value"
+                stroke="#7c3aed"
+                fill="#7c3aed"
+                fillOpacity={0.28}
+                strokeWidth={2}
+              />
+              <Tooltip
+                contentStyle={{
+                  background: "#080f1e",
+                  border: "1px solid #1e3a5f",
+                  borderRadius: 8,
+                  color: "#f1f5f9",
+                  fontSize: 12,
+                }}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Industry Trend Analysis */}
+      <TrendSection />
+
+      {/* Recent analyses table */}
+      <div
+        style={{
+          background: "#080f1e",
+          border: "1px solid #111c30",
+          borderRadius: 14,
+          padding: "22px 24px",
+          marginTop: 28,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 18,
+          }}
+        >
+          <div>
+            <h3
+              style={{
+                color: "#f1f5f9",
+                fontSize: 15,
+                fontWeight: 700,
+                margin: 0,
+              }}
+            >
+              Recent Strategic Analyses
+            </h3>
+            <p
+              style={{ color: "#475569", fontSize: 12, margin: "4px 0 0" }}
+            >
+              Monitor and access recent corporate model evaluations
+            </p>
+          </div>
+          <Link
+            href="/history"
+            style={{ color: "#60a5fa", fontSize: 13, textDecoration: "none" }}
+          >
+            Browse History →
+          </Link>
+        </div>
+
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #111c30" }}>
+              {[
+                "Date",
+                "Industry Sector",
+                "AI Use Case",
+                "Predicted ROI",
+                "Readiness",
+                "Status",
+                "",
+              ].map((h) => (
+                <th
+                  key={h}
+                  style={{
+                    color: "#334155",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    padding: "8px 12px",
+                    textAlign: "left",
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {recentAnalyses.map((r) => (
+              <tr
+                key={r.id}
+                style={{
+                  borderBottom: "1px solid #0a1220",
+                  transition: "background 0.15s",
+                }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLTableRowElement).style.background =
+                    "#0b1525")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLTableRowElement).style.background =
+                    "transparent")
+                }
+              >
+                <td
+                  style={{
+                    color: "#64748b",
+                    fontSize: 13,
+                    padding: "13px 12px",
+                  }}
+                >
+                  {r.date}
+                </td>
+                <td
+                  style={{
+                    color: "#cbd5e1",
+                    fontSize: 13,
+                    padding: "13px 12px",
+                  }}
+                >
+                  {r.industry}
+                </td>
+                <td
+                  style={{
+                    color: "#cbd5e1",
+                    fontSize: 13,
+                    padding: "13px 12px",
+                  }}
+                >
+                  {r.useCase}
+                </td>
+                <td
+                  style={{
+                    color: "#4ade80",
+                    fontSize: 13,
+                    fontWeight: 700,
+                    padding: "13px 12px",
+                  }}
+                >
+                  {r.roi}
+                </td>
+                <td
+                  style={{
+                    color: "#60a5fa",
+                    fontSize: 13,
+                    padding: "13px 12px",
+                  }}
+                >
+                  {r.readiness}
+                </td>
+                <td style={{ padding: "13px 12px" }}>
+                  <span
+                    style={{
+                      background: "#052e1633",
+                      border: "1px solid #16653455",
+                      color: "#4ade80",
+                      fontSize: 11,
+                      fontWeight: 700,
+                      padding: "3px 10px",
+                      borderRadius: 20,
+                    }}
+                  >
+                    Ready
+                  </span>
+                </td>
+                <td style={{ padding: "13px 12px" }}>
+                  <Link
+                    href={`/analysis/${r.id}`}
+                    style={{
+                      color: "#60a5fa",
+                      fontSize: 13,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Inspect →
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Floating chatbot */}
+      <AIChatbot />
     </div>
   );
 }

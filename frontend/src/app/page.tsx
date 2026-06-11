@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Layers
 } from "lucide-react";
+import AIChatbot from "@/components/AIChatbot";
 
 // ─── Animated Counter ─────────────────────────────────────────────────────────
 function AnimatedCounter({ end, suffix = "" }: { end: number; suffix?: string }) {
@@ -52,9 +53,6 @@ function Navbar() {
 
   return (
     <nav className={`corp-nav ${scrolled ? "scrolled" : ""}`}>
-
-
-      {/* Main Nav */}
       <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-4 md:py-5.5 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 md:gap-3 group shrink-0">
@@ -74,15 +72,14 @@ function Navbar() {
         {/* Nav Links */}
         <div className="hidden lg:flex items-center gap-8">
           {[
-            { label: "Home", href: "/" },
-            { label: "About", href: "#about" },
+            { label: "Home",     href: "/" },
+            { label: "About",    href: "#about" },
             { label: "Services", href: "#services" },
             { label: "Features", href: "#features" },
-            { label: "Pricing", href: "#pricing" },
-            { label: "Contact", href: "#contact" },
+            { label: "Pricing",  href: "#pricing" },
+            { label: "Contact",  href: "#contact" },
           ].map(item => (
-            <a key={item.label} href={item.href}
-              className={`corp-nav-link ${scrolled ? "scrolled" : ""}`}>
+            <a key={item.label} href={item.href} className={`corp-nav-link ${scrolled ? "scrolled" : ""}`}>
               {item.label}
             </a>
           ))}
@@ -163,10 +160,10 @@ function Hero() {
         <div className="max-w-[1280px] mx-auto px-4 md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 bg-white shadow-2xl">
             {[
-              { value: 2400, suffix: "+", label: "Strategy Reports" },
-              { value: 142, suffix: "%", label: "Average ROI Predicted" },
-              { value: 94, suffix: "%", label: "Model Accuracy" },
-              { value: 50, suffix: "+", label: "Industries Covered" },
+              { value: 2400, suffix: "+",  label: "Strategy Reports" },
+              { value: 142,  suffix: "%",  label: "Average ROI Predicted" },
+              { value: 94,   suffix: "%",  label: "Model Accuracy" },
+              { value: 50,   suffix: "+",  label: "Industries Covered" },
             ].map((stat, i) => (
               <div key={i} className={`py-4 md:py-8 px-2 md:px-8 text-center border-gray-100 md:border-b-0 ${i % 2 === 0 ? 'border-r' : ''} md:border-r md:last:border-r-0 ${i < 2 ? 'border-b' : ''}`}>
                 <div className="text-[1.8rem] md:text-[2.5rem] font-black text-[#1a3a5c] leading-none" style={{ fontFamily: "var(--font-display)" }}>
@@ -188,10 +185,10 @@ function Hero() {
 function ServicesRow() {
   const [active, setActive] = useState(2);
   const services = [
-    { id: 0, icon: LineChart, label: "ROI Projections", sub: "Monte Carlo Simulation" },
-    { id: 1, icon: Gauge, label: "AI Readiness Score", sub: "6-Dimension Analysis" },
-    { id: 2, icon: Brain, label: "LLM Insights", sub: "Executive Reports" },
-    { id: 3, icon: Target, label: "Strategic Roadmap", sub: "Prioritized Actions" },
+    { id: 0, icon: LineChart, label: "ROI Projections",     sub: "Monte Carlo Simulation" },
+    { id: 1, icon: Gauge,     label: "AI Readiness Score",  sub: "6-Dimension Analysis" },
+    { id: 2, icon: Brain,     label: "LLM Insights",        sub: "Executive Reports" },
+    { id: 3, icon: Target,    label: "Strategic Roadmap",   sub: "Prioritized Actions" },
     { id: 4, icon: FileCheck, label: "SHAP Explainability", sub: "Feature Attribution" },
   ];
 
@@ -253,40 +250,30 @@ function WhyUs() {
   return (
     <section id="about" className="py-28 bg-white">
       <div className="max-w-[1280px] mx-auto px-6">
-        {/* Header */}
         <div className="text-center mb-16">
           <span className="section-label">Why Work With Us</span>
           <h2 className="section-title">Why Choose Us?</h2>
           <div className="corp-divider mx-auto" />
         </div>
 
-        {/* Tabs */}
         <div className="flex justify-center border-b border-gray-200 mb-12 gap-0 flex-wrap">
           {tabs.map((t, i) => (
-            <button key={t} onClick={() => setTab(i)}
-              className={`tab-btn ${tab === i ? "active" : ""}`}>
+            <button key={t} onClick={() => setTab(i)} className={`tab-btn ${tab === i ? "active" : ""}`}>
               {t}
             </button>
           ))}
         </div>
 
-        {/* Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <div>
-            <img
-              src="/team_meeting.png"
-              alt="Team collaboration"
-              style={{ width: "100%", height: "440px", objectFit: "cover" }}
-            />
+            <img src="/team_meeting.png" alt="Team collaboration" style={{ width: "100%", height: "440px", objectFit: "cover" }} />
           </div>
           <div>
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 800, color: "#111827", marginBottom: "1.25rem" }}>
               {current.title}
             </h3>
             <div className="corp-divider" />
-            <p style={{ color: "#6b7280", lineHeight: 1.8, fontSize: "1.05rem", marginBottom: "2rem" }}>
-              {current.text}
-            </p>
+            <p style={{ color: "#6b7280", lineHeight: 1.8, fontSize: "1.05rem", marginBottom: "2rem" }}>{current.text}</p>
             <ul className="space-y-4 mb-10">
               {current.points.map((p) => (
                 <li key={p} className="flex items-center gap-3 text-base font-semibold text-[#374151]">
@@ -313,7 +300,6 @@ function CompanyIntro() {
     <section className="py-28 bg-[#f9fafb]">
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-          {/* Left */}
           <div>
             <span className="section-label">Our Story</span>
             <h2 className="section-title mb-6">AI Strategy Company<br />With a Difference. Innovation.</h2>
@@ -327,8 +313,6 @@ function CompanyIntro() {
               Where our headquarters spans the Americas, Europe, and Asia-Pacific. Regional offices
               are located in New York, London, Singapore, and Dubai, with remote-first teams globally.
             </p>
-
-            {/* Author */}
             <div className="flex items-center gap-5 pt-5 border-t border-gray-200">
               <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#1a3a5c] to-[#2d5a8a] flex items-center justify-center text-white font-bold text-lg">
                 AT
@@ -339,8 +323,6 @@ function CompanyIntro() {
               </div>
             </div>
           </div>
-
-          {/* Right: Two image cards */}
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-4">
               <div style={{ background: "#1a3a5c", padding: "2rem", color: "white" }}>
@@ -355,11 +337,7 @@ function CompanyIntro() {
               </div>
             </div>
             <div className="space-y-6 mt-8">
-              <img
-                src="/data_center.png"
-                alt="Technology infrastructure"
-                style={{ width: "100%", height: "240px", objectFit: "cover" }}
-              />
+              <img src="/data_center.png" alt="Technology infrastructure" style={{ width: "100%", height: "240px", objectFit: "cover" }} />
               <div style={{ background: "#111827", padding: "2rem", color: "white" }}>
                 <Layers className="w-8 h-8 text-[#c8a96e] mb-4" />
                 <div className="font-bold text-base mb-2.5">Analytics Redefined</div>
@@ -381,49 +359,24 @@ function CompanyIntro() {
 // ─── Dark Services Section ─────────────────────────────────────────────────────
 function DarkServices() {
   const services = [
-    {
-      icon: LineChart,
-      title: "ROI Projections",
-      desc: "Provides AI strategy services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination.",
-    },
-    {
-      icon: Gauge,
-      title: "AI Readiness Score",
-      desc: "Provides AI freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination.",
-    },
-    {
-      icon: Brain,
-      title: "LLM Executive Insights",
-      desc: "Provides up freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination.",
-    },
-    {
-      icon: Target,
-      title: "Strategic Roadmap",
-      desc: "Provides all freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination.",
-    },
-    {
-      icon: FileCheck,
-      title: "SHAP Explainability",
-      desc: "Provides freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination.",
-    },
+    { icon: LineChart, title: "ROI Projections",       desc: "Provides AI strategy services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination." },
+    { icon: Gauge,     title: "AI Readiness Score",    desc: "Provides AI freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination." },
+    { icon: Brain,     title: "LLM Executive Insights",desc: "Provides up freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination." },
+    { icon: Target,    title: "Strategic Roadmap",     desc: "Provides all freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination." },
+    { icon: FileCheck, title: "SHAP Explainability",   desc: "Provides freight services to meet up with your organization needs, professional services to deliver your AI insight fast and safe to its final destination." },
   ];
 
   return (
     <section id="services" className="section-dark py-28">
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-          {/* Left heading */}
           <div>
             <span className="section-label">What We Offer</span>
-            <h2 className="section-title light mb-8">
-              Unmatched<br />Services.<br />Unmatched<br />Excellence.
-            </h2>
+            <h2 className="section-title light mb-8">Unmatched<br />Services.<br />Unmatched<br />Excellence.</h2>
             <Link href="/register" className="btn-corp-primary mt-4 w-fit flex items-center gap-2">
               <ArrowRight className="w-4 h-4" /> Get Started
             </Link>
           </div>
-
-          {/* Right grid */}
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {services.map((s, i) => {
               const Icon = s.icon;
@@ -451,12 +404,12 @@ function DarkServices() {
 // ─── Features Section ──────────────────────────────────────────────────────────
 function Features() {
   const feats = [
-    { icon: Brain, title: "LLM Executive Summaries", desc: "Generate narrative summaries, strategic bullet points, and boardroom presentations explaining model findings automatically." },
-    { icon: ShieldCheck, title: "SHAP Explainability", desc: "Identify exactly which variables drive ROI predictions using SHAP values — complete transparency into AI decision-making." },
-    { icon: FolderOpen, title: "Shareable Artifacts", desc: "Download comprehensive strategy briefs with visuals, model weights, and recommendation spreadsheets for key stakeholders." },
-    { icon: BarChart3, title: "Readiness Benchmarking", desc: "Compare your AI readiness score across your industry peer group with anonymized benchmarking data from 50+ sectors." },
-    { icon: Target, title: "Actionable Roadmaps", desc: "Prioritized recommendation lists with timeline estimates, technical difficulty tiers, and required staffing guidance." },
-    { icon: TrendingUp, title: "Scenario Projections", desc: "Run conservative, moderate, and aggressive scenario projections with confidence intervals and payback period analysis." },
+    { icon: Brain,      title: "LLM Executive Summaries", desc: "Generate narrative summaries, strategic bullet points, and boardroom presentations explaining model findings automatically." },
+    { icon: ShieldCheck,title: "SHAP Explainability",     desc: "Identify exactly which variables drive ROI predictions using SHAP values — complete transparency into AI decision-making." },
+    { icon: FolderOpen, title: "Shareable Artifacts",     desc: "Download comprehensive strategy briefs with visuals, model weights, and recommendation spreadsheets for key stakeholders." },
+    { icon: BarChart3,  title: "Readiness Benchmarking",  desc: "Compare your AI readiness score across your industry peer group with anonymized benchmarking data from 50+ sectors." },
+    { icon: Target,     title: "Actionable Roadmaps",     desc: "Prioritized recommendation lists with timeline estimates, technical difficulty tiers, and required staffing guidance." },
+    { icon: TrendingUp, title: "Scenario Projections",    desc: "Run conservative, moderate, and aggressive scenario projections with confidence intervals and payback period analysis." },
   ];
 
   return (
@@ -470,7 +423,6 @@ function Features() {
             Avoid blind spending. Leverage models trained on thousands of corporate cases to plan data-backed AI roadmap decisions.
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {feats.map((f, i) => {
             const Icon = f.icon;
@@ -522,7 +474,6 @@ function Footer() {
   return (
     <footer className="corp-footer">
       <div className="max-w-[1280px] mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
-        {/* Brand */}
         <div>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c8a96e] to-[#e8d09e] shadow-[0_4px_15px_rgba(200,169,110,0.3),inset_0_2px_4px_rgba(255,255,255,0.4)] flex items-center justify-center shrink-0">
@@ -532,9 +483,7 @@ function Footer() {
               <div className="text-lg font-extrabold text-white tracking-tight leading-none">
                 Corporate <span className="text-[#c8a96e]">AI</span>
               </div>
-              <div className="text-[10px] font-bold text-white/60 tracking-[0.15em] uppercase">
-                Strategy Advisor
-              </div>
+              <div className="text-[10px] font-bold text-white/60 tracking-[0.15em] uppercase">Strategy Advisor</div>
             </div>
           </div>
           <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, marginBottom: "1.25rem" }}>
@@ -549,35 +498,26 @@ function Footer() {
           </div>
         </div>
 
-        {/* Services */}
         <div>
-          <h4 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
-            Services
-          </h4>
+          <h4 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>Services</h4>
           <ul className="space-y-1">
-            {["ROI Projections", "AI Readiness Score", "LLM Insights", "Strategic Roadmap", "SHAP Explainability", "Industry Benchmarks"].map(l => (
+            {["ROI Projections","AI Readiness Score","LLM Insights","Strategic Roadmap","SHAP Explainability","Industry Benchmarks"].map(l => (
               <li key={l}><a href="#" className="footer-link">{l}</a></li>
             ))}
           </ul>
         </div>
 
-        {/* Outlook */}
         <div>
-          <h4 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
-            Outlook
-          </h4>
+          <h4 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>Outlook</h4>
           <ul className="space-y-1">
-            {["Analysis Tracking", "Get a Quote", "Client Portal", "Our Associates", "News & Events", "Careers"].map(l => (
+            {["Analysis Tracking","Get a Quote","Client Portal","Our Associates","News & Events","Careers"].map(l => (
               <li key={l}><a href="#" className="footer-link">{l}</a></li>
             ))}
           </ul>
         </div>
 
-        {/* Subscribe */}
         <div>
-          <h4 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
-            Subscribe
-          </h4>
+          <h4 style={{ fontSize: "0.9rem", fontWeight: 800, color: "#ffffff", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "1.5rem" }}>Subscribe</h4>
           <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.7, marginBottom: "1rem" }}>
             Get to know about Corporate AI, our updates and all news straight to your inbox.
           </p>
@@ -591,12 +531,11 @@ function Footer() {
               <ArrowRight className="w-4 h-4 text-white" />
             </button>
           </div>
-
           <div className="mt-6 space-y-2.5">
             {[
               { icon: MapPin, text: "123 AI Boulevard, New York, NY 10001" },
-              { icon: Phone, text: "+1 (800) 555-0199" },
-              { icon: Mail, text: "info@corpai.advisor.com" },
+              { icon: Phone,  text: "+1 (800) 555-0199" },
+              { icon: Mail,   text: "info@corpai.advisor.com" },
             ].map(({ icon: Icon, text }, i) => (
               <div key={i} className="flex items-start gap-2.5 text-sm text-white/45">
                 <Icon className="w-4 h-4 text-[#c8a96e] shrink-0 mt-0.5" />
@@ -607,15 +546,15 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="border-t border-white/06 py-5">
         <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
           <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)" }}>
             © 2026 Corporate AI Strategy Advisor. All Rights Reserved.
           </span>
           <div className="flex gap-5">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(l => (
-              <a key={l} href="#" style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)", transition: "color 0.2s" }}
+            {["Privacy Policy","Terms of Service","Cookie Policy"].map(l => (
+              <a key={l} href="#"
+                style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.3)", transition: "color 0.2s" }}
                 onMouseEnter={e => (e.target as HTMLAnchorElement).style.color = "#c8a96e"}
                 onMouseLeave={e => (e.target as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"}>
                 {l}
@@ -641,6 +580,8 @@ export default function LandingPage() {
       <Features />
       <CTAStrip />
       <Footer />
+      {/* AI Strategy Chatbot — consistent across landing & dashboard */}
+      <AIChatbot />
     </div>
   );
 }
