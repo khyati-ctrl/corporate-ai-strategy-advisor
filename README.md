@@ -1,80 +1,83 @@
 # 🤖 Corporate AI Strategy Advisor
 
-> An intelligent platform that helps organizations evaluate AI readiness, analyze business opportunities, track industry trends, and make data-driven AI adoption decisions.
+An AI-powered decision support platform that helps organizations evaluate AI adoption opportunities, analyze business readiness, estimate ROI, and explore industry AI trends through an interactive dashboard.
 
-## ✨ Features
+## 🌐 Live Demo
 
-* 📊 Interactive Executive Dashboard
-* 🤖 AI Readiness Assessment
-* 📈 Advanced Business Analytics & KPI Tracking
-* 🚀 Startup & Industry Trend Monitoring
-* 💡 AI Strategy Recommendations
-* 💬 AI Chatbot Assistant
-* 🔐 Secure Authentication System
-* 📱 Fully Responsive Modern UI
+https://corporate-ai-strategy.vercel.app/
 
-## 🛠️ Tech Stack
+## 🚀 Features
+
+* AI Readiness Assessment
+* ROI & Business Impact Analytics
+* Interactive Executive Dashboard
+* Industry & Startup Trend Insights
+* KPI Monitoring Cards
+* Business Strategy Recommendations
+* Authentication System (Login/Register UI)
+* Analysis History Tracking
+* Responsive SaaS-Inspired Interface
+* AI Assistant Chatbot Integration
+
+## 🛠 Tech Stack
 
 * Next.js 16
 * React 19
 * TypeScript
 * Tailwind CSS
-* NextAuth
-* Recharts
-* Zustand
-* Axios
 * Framer Motion
+* Recharts
+* NextAuth
+* Zustand
 
-## 🚀 Getting Started
+## 📂 System Architecture
+
+```text
+User Interface
+      │
+      ▼
+ Next.js Frontend
+      │
+      ├── Dashboard
+      ├── Analysis Module
+      ├── Authentication
+      ├── History Tracking
+      └── AI Assistant
+      │
+      ▼
+ Data Processing Layer
+      │
+      ▼
+ Business Insights & Recommendations
+```
+
+## 📁 Project Structure
+
+```text
+src/
+├── app/
+│   ├── dashboard/
+│   ├── analysis/
+│   ├── login/
+│   ├── register/
+│   ├── history/
+│   └── profile/
+├── components/
+└── public/
+```
+
+## ▶️ Run Locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open:
+Open: http://localhost:3000
 
-```text
-http://localhost:3000
-```
+## 📌 Project Status
 
-## 📂 Project Structure
-
-```text
-frontend/
-├── public/
-├── src/
-│   ├── app/
-│   │   ├── analysis/
-│   │   ├── dashboard/
-│   │   ├── history/
-│   │   ├── login/
-│   │   ├── profile/
-│   │   └── register/
-│   │
-│   ├── components/
-│   │
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-
-├── next.config.ts
-├── package.json
-└── tsconfig.json
-```
-
-## 🎯 Objective
-
-Corporate AI Strategy Advisor enables businesses to assess AI adoption potential, visualize key metrics, monitor emerging trends, and receive strategic recommendations through a unified analytics platform.
-
-## 🔮 Future Scope
-
-* Real-time AI market insights
-* GPT/Gemini integration
-* Predictive analytics
-* PDF report generation
-* Industry benchmarking
-
----
-
-Built with ❤️ using Next.js, React, and Modern Analytics.
+✅ Frontend Development Complete
+✅ Dashboard & Analytics Complete
+✅ Trend Analysis Module Complete
+✅ Deployment Complete
