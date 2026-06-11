@@ -1,124 +1,56 @@
 interface KPICardProps {
-  title: string;
+  icon: string;
+  label: string;
   value: string;
   change?: string;
   changePositive?: boolean;
-  icon: string;
-  accentColor: string;
+  accent: string;
   sub?: string;
 }
 
-export default function KPICard({
-  title,
-  value,
-  change,
-  changePositive = true,
-  icon,
-  accentColor,
-  sub,
-}: KPICardProps) {
+export default function KPICard({ icon, label, value, change, changePositive = true, accent, sub }: KPICardProps) {
   return (
     <div
       style={{
-        background: "#080f1e",
-        border: `1px solid ${accentColor}33`,
-        borderRadius: 14,
-        padding: "20px 20px 18px",
-        position: "relative",
-        overflow: "hidden",
-        transition: "transform 0.18s, box-shadow 0.18s",
-        cursor: "default",
+        background: "#ffffff",
+        border: "1px solid #e5e7eb",
+        borderTop: `3px solid ${accent}`,
+        padding: "2rem",
+        transition: "box-shadow 0.25s",
       }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLDivElement;
-        el.style.transform = "translateY(-3px)";
-        el.style.boxShadow = `0 8px 32px ${accentColor}2a`;
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLDivElement;
-        el.style.transform = "translateY(0)";
-        el.style.boxShadow = "none";
-      }}
+      onMouseEnter={(e) => ((e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 24px rgba(0,0,0,0.07)")}
+      onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.boxShadow = "none")}
     >
-      {/* top accent bar */}
-      <div
-        style={{
-          position: "absolute",
-          inset: "0 0 auto 0",
-          height: 3,
-          background: `linear-gradient(90deg,${accentColor},${accentColor}55)`,
-          borderRadius: "14px 14px 0 0",
-        }}
-      />
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          marginBottom: 10,
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            color: "#64748b",
-            fontSize: 11,
-            fontWeight: 600,
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-          }}
-        >
-          {title}
-        </p>
-        <div
-          style={{
-            width: 38,
-            height: 38,
-            borderRadius: 10,
-            background: `${accentColor}18`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 19,
-          }}
-        >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div>
+          <p style={{
+            fontSize: "0.75rem", fontWeight: 800, color: "#9ca3af",
+            textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: "0.625rem",
+          }}>{label}</p>
+          <h3 style={{
+            fontSize: "2.25rem", fontWeight: 900, color: "#111827",
+            lineHeight: 1, margin: 0,
+          }}>{value}</h3>
+          {(change || sub) && (
+            <div style={{ marginTop: "0.625rem", display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+              {change && (
+                <span style={{ fontSize: "0.85rem", fontWeight: 800, color: changePositive ? "#10B981" : "#ef4444" }}>
+                  {changePositive ? "↑" : "↓"} {change}
+                </span>
+              )}
+              {sub && <span style={{ fontSize: "0.78rem", color: "#9ca3af" }}>{sub}</span>}
+            </div>
+          )}
+        </div>
+        <div style={{
+          width: 48, height: 48,
+          background: `${accent}14`,
+          border: `1px solid ${accent}30`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 22, flexShrink: 0,
+        }}>
           {icon}
         </div>
-      </div>
-
-      <p
-        style={{
-          margin: "0 0 8px",
-          color: "#f1f5f9",
-          fontSize: 26,
-          fontWeight: 800,
-          lineHeight: 1,
-          letterSpacing: "-0.02em",
-        }}
-      >
-        {value}
-      </p>
-
-      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        {change && (
-          <span
-            style={{
-              background: changePositive ? "#052e1633" : "#2d050533",
-              color: changePositive ? "#4ade80" : "#f87171",
-              fontSize: 11,
-              fontWeight: 700,
-              padding: "2px 8px",
-              borderRadius: 20,
-              border: `1px solid ${changePositive ? "#166534" : "#7f1d1d"}44`,
-            }}
-          >
-            {changePositive ? "▲" : "▼"} {change}
-          </span>
-        )}
-        {sub && (
-          <span style={{ color: "#475569", fontSize: 11 }}>{sub}</span>
-        )}
       </div>
     </div>
   );
