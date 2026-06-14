@@ -30,36 +30,36 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-bg-base p-6 grid-bg">
+    <div className="relative min-h-screen flex items-center justify-center bg-[#f3f4f6] p-6">
       {/* Background radial glows */}
-      <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[500px] h-[350px] bg-primary/10 rounded-full blur-[100px] pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[500px] h-[350px] bg-[#1a3a5c]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="glass-panel w-full max-w-lg p-10 sm:p-12 rounded-2xl relative overflow-hidden"
+        className="w-full max-w-lg p-10 sm:p-12 relative overflow-hidden"
+        style={{ background: "#ffffff", border: "1px solid #e5e7eb", boxShadow: "0 10px 30px rgba(0,0,0,0.02)" }}
       >
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-secondary to-accent" />
+        <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: "linear-gradient(90deg, #1a3a5c, #2d5a8a, #c8a96e)" }} />
         
-        {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-primary to-accent flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary/20">
+          <div className="w-12 h-12 bg-gradient-to-tr from-[#1a3a5c] to-[#2d5a8a] flex items-center justify-center mx-auto mb-4 shadow-[0_4px_12px_rgba(26,58,92,0.2)]">
             <Bot className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-extrabold text-text-primary tracking-tight">Welcome Back</h1>
-          <p className="text-base text-text-muted mt-1 font-medium">Sign in to your Corporate AI Advisor profile</p>
+          <h1 className="text-3xl font-extrabold text-[#111827] tracking-tight">Welcome Back</h1>
+          <p className="text-base text-[#6b7280] mt-1 font-medium">Sign in to your Corporate AI Advisor profile</p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-5">
           {/* Email */}
           <div>
-            <label className="block text-sm font-bold text-text-secondary uppercase tracking-wider mb-2">
+            <label className="block text-sm font-bold text-[#374151] uppercase tracking-wider mb-2">
               Email Address
             </label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-text-muted">
+              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#9ca3af]">
                 <Mail className="w-4 h-4" />
               </span>
               <input
@@ -68,7 +68,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full pl-10 pr-4 py-3.5 bg-bg-base/60 border border-border-premium focus:border-primary/50 rounded-xl text-text-primary text-sm placeholder-text-muted/60 outline-none transition-all focus:ring-4 focus:ring-primary/10 font-medium"
+                className="w-full pl-10 pr-4 py-3.5 bg-[#f9fafb] border border-[#e5e7eb] focus:border-[#1a3a5c]/50 text-[#111827] text-sm placeholder-[#9ca3af] outline-none transition-all font-medium"
               />
             </div>
           </div>
@@ -76,15 +76,15 @@ export default function LoginPage() {
           {/* Password */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className="block text-sm font-bold text-text-secondary uppercase tracking-wider">
+              <label className="block text-sm font-bold text-[#374151] uppercase tracking-wider">
                 Password
               </label>
-              <a href="#" className="text-xs text-primary hover:text-accent font-semibold transition-colors">
+              <a href="#" className="text-xs text-[#1a3a5c] hover:text-[#c8a96e] font-semibold transition-colors">
                 Forgot password?
               </a>
             </div>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-text-muted">
+              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#9ca3af]">
                 <Lock className="w-4 h-4" />
               </span>
               <input
@@ -93,7 +93,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
-                className="w-full pl-10 pr-4 py-3.5 bg-bg-base/60 border border-border-premium focus:border-primary/50 rounded-xl text-text-primary text-sm placeholder-text-muted/60 outline-none transition-all focus:ring-4 focus:ring-primary/10 font-medium"
+                className="w-full pl-10 pr-4 py-3.5 bg-[#f9fafb] border border-[#e5e7eb] focus:border-[#1a3a5c]/50 text-[#111827] text-sm placeholder-[#9ca3af] outline-none transition-all font-medium"
               />
             </div>
           </div>
@@ -136,8 +136,8 @@ export default function LoginPage() {
         </form>
 
         <div className="relative my-8 text-center">
-          <div className="absolute inset-y-1/2 left-0 right-0 h-[1px] bg-border-premium" />
-          <span className="relative bg-bg-surface px-4 text-sm font-bold text-text-muted uppercase tracking-wider">
+          <div className="absolute inset-y-1/2 left-0 right-0 h-[1px] bg-[#e5e7eb]" />
+          <span className="relative bg-white px-4 text-sm font-bold text-[#9ca3af] uppercase tracking-wider">
             Or
           </span>
         </div>
@@ -153,25 +153,25 @@ export default function LoginPage() {
         </div>
 
         {/* Register Redirect */}
-        <p className="text-center text-xs text-text-muted mt-8 font-medium">
+        <p className="text-center text-xs text-[#6b7280] mt-8 font-medium">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-primary hover:text-accent font-bold transition-colors">
+          <Link href="/register" className="text-[#1a3a5c] hover:text-[#c8a96e] font-bold transition-colors">
             Sign up free
           </Link>
         </p>
 
         {/* Demo Fast-Pass */}
-        <div className="mt-6 p-4 rounded-xl bg-accent/5 border border-accent/15 flex flex-col items-center gap-2.5 text-center">
+        <div className="mt-6 p-4 bg-[#f9fafb] border border-[#e5e7eb] flex flex-col items-center gap-2.5 text-center">
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-accent" />
-            <span className="text-xs font-bold text-accent uppercase tracking-wider">Demo Mode</span>
+            <ShieldCheck className="w-4 h-4 text-[#c8a96e]" />
+            <span className="text-xs font-bold text-[#c8a96e] uppercase tracking-wider">Demo Mode</span>
           </div>
-          <p className="text-[11px] text-text-muted font-medium leading-relaxed">
+          <p className="text-[11px] text-[#6b7280] font-medium leading-relaxed">
             By-pass user setup constraints and inspect pre-populated strategy metrics immediately.
           </p>
           <button 
             onClick={() => router.push("/dashboard")} 
-            className="w-full py-3 bg-accent/10 hover:bg-accent/25 text-accent text-sm font-extrabold uppercase tracking-wider rounded-lg transition-colors cursor-pointer border border-accent/20"
+            className="w-full py-3 bg-[#ffffff] hover:bg-[#f3f4f6] text-[#c8a96e] text-sm font-extrabold uppercase tracking-wider transition-colors cursor-pointer border border-[#e5e7eb]"
           >
             Skip Authentication →
           </button>

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import ChatBot from "@/components/ChatBot";
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,7 +31,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <Providers>
+          {children}
+          <ChatBot />
+        </Providers>
       </body>
     </html>
   );

@@ -21,10 +21,10 @@ import {
 
 function Section({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white border border-gray-200 p-5 sm:p-8 lg:p-10 mb-7">
-      <div className="mb-6 pb-5 border-b border-gray-100">
-        <h3 className="text-[1.15rem] font-extrabold text-gray-900 uppercase tracking-[0.06em]">{title}</h3>
-        {desc && <p className="text-sm text-gray-400 mt-1">{desc}</p>}
+    <div style={{ background: "#ffffff", border: "1px solid #e5e7eb", padding: "1.6rem", marginBottom: "1.25rem" }}>
+      <div className="mb-6 pb-5 border-b border-[#f3f4f6]">
+        <h3 className="text-[1.15rem] font-extrabold text-[#111827] uppercase tracking-[0.06em]">{title}</h3>
+        {desc && <p className="text-[0.85rem] text-[#9ca3af] mt-1">{desc}</p>}
       </div>
       {children}
     </div>
@@ -49,7 +49,7 @@ export default function ProfilePage() {
       <main style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
         <TopBar title="Profile & Settings" subtitle="Manage your corporate account preferences and authentication keys" />
 
-        <div className="flex-1 p-4 sm:p-6 lg:p-10 overflow-y-auto w-full max-w-[100vw]">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-5 w-full max-w-[100vw]">
           <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-5 lg:gap-7 max-w-[1100px] w-full mx-auto">
 
             {/* ── Left: Profile Card ─────────────────────────────── */}
@@ -225,7 +225,6 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                {/* MFA Toggle */}
                 <div style={{
                   display: "flex", justifyContent: "space-between", alignItems: "center",
                   padding: "1.25rem 1.5rem",

@@ -26,6 +26,8 @@ interface CompanyProfile {
   annual_revenue_usd: number;
   employee_count: number;
   country: string;
+  is_startup: boolean;
+  funding_stage: string;
 }
 
 interface ReadinessScores {
@@ -154,6 +156,7 @@ export default function NewAnalysisPage() {
   const [company, setCompany] = useState<CompanyProfile>({
     industry_sector: "", company_size: "",
     annual_revenue_usd: 100, employee_count: 500, country: "",
+    is_startup: false, funding_stage: "",
   });
 
   const [readiness, setReadiness] = useState<ReadinessScores>({
@@ -270,7 +273,7 @@ export default function NewAnalysisPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         {/* Industry */}
                         <div>
-                          <label className="form-label">Industry Sector *</label>
+                          <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Industry Sector *</label>
                           <div style={{ position: "relative" }}>
                             <Briefcase size={18} color="#9ca3af" style={{ position: "absolute", left: "1.1rem", top: "50%", transform: "translateY(-50%)", zIndex: 1 }} />
                             <select value={company.industry_sector}
@@ -283,7 +286,7 @@ export default function NewAnalysisPage() {
                         </div>
                         {/* Country */}
                         <div>
-                          <label className="form-label">Country / Region *</label>
+                          <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Country / Region *</label>
                           <div style={{ position: "relative" }}>
                             <MapPin size={18} color="#9ca3af" style={{ position: "absolute", left: "1.1rem", top: "50%", transform: "translateY(-50%)", zIndex: 1 }} />
                             <select value={company.country}
@@ -298,9 +301,59 @@ export default function NewAnalysisPage() {
                         </div>
                       </div>
 
+                      {/* Business Type (Startup or Established) */}
+                      <div style={{ marginBottom: "1.5rem" }}>
+                        <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Business Type *</label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <label style={{
+                            display: "flex", alignItems: "center", gap: "1rem",
+                            padding: "1.1rem 1.5rem",
+                            border: `2px solid ${!company.is_startup ? "#1a3a5c" : "#e5e7eb"}`,
+                            background: !company.is_startup ? "rgba(26,58,92,0.04)" : "#ffffff",
+                            cursor: "pointer", transition: "all 0.2s",
+                          }}>
+                            <input type="radio" name="is_startup" checked={!company.is_startup}
+                              onChange={() => setCompany({ ...company, is_startup: false })}
+                              style={{ accentColor: "#1a3a5c" }} />
+                            <span style={{ fontSize: "0.92rem", fontWeight: 600, color: !company.is_startup ? "#1a3a5c" : "#374151" }}>Established Enterprise</span>
+                          </label>
+
+                          <label style={{
+                            display: "flex", alignItems: "center", gap: "1rem",
+                            padding: "1.1rem 1.5rem",
+                            border: `2px solid ${company.is_startup ? "#1a3a5c" : "#e5e7eb"}`,
+                            background: company.is_startup ? "rgba(26,58,92,0.04)" : "#ffffff",
+                            cursor: "pointer", transition: "all 0.2s",
+                          }}>
+                            <input type="radio" name="is_startup" checked={company.is_startup}
+                              onChange={() => setCompany({ ...company, is_startup: true })}
+                              style={{ accentColor: "#1a3a5c" }} />
+                            <span style={{ fontSize: "0.92rem", fontWeight: 600, color: company.is_startup ? "#1a3a5c" : "#374151" }}>Startup Business</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Startup Funding Stage (Conditional) */}
+                      {company.is_startup && (
+                        <div className="grid grid-cols-1 gap-6 mb-6">
+                          <div>
+                            <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Funding Stage *</label>
+                            <div style={{ position: "relative" }}>
+                              <Briefcase size={18} color="#9ca3af" style={{ position: "absolute", left: "1.1rem", top: "50%", transform: "translateY(-50%)", zIndex: 1 }} />
+                              <select value={company.funding_stage}
+                                onChange={e => setCompany({ ...company, funding_stage: e.target.value })}
+                                style={selectStyle}>
+                                <option value="">Select funding stage...</option>
+                                {["Bootstrapped", "Pre-Seed", "Seed", "Series A", "Series B", "Series C+"].map(s => <option key={s} value={s}>{s}</option>)}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                       {/* Company Size */}
                       <div style={{ marginBottom: "1.5rem" }}>
-                        <label className="form-label">Company Size Scale *</label>
+                        <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Company Size Scale *</label>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {companySizes.map(size => {
                             const isSelected = company.company_size === size;
@@ -324,7 +377,7 @@ export default function NewAnalysisPage() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label className="form-label">Annual Revenue (USD Millions)</label>
+                          <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Annual Revenue (USD Millions)</label>
                           <div style={{ position: "relative" }}>
                             <DollarSign size={18} color="#9ca3af" style={{ position: "absolute", left: "1.1rem", top: "50%", transform: "translateY(-50%)" }} />
                             <input type="number" value={company.annual_revenue_usd}
@@ -333,7 +386,7 @@ export default function NewAnalysisPage() {
                           </div>
                         </div>
                         <div>
-                          <label className="form-label">Employee Count</label>
+                          <label className="form-label" style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#374151", marginBottom: "0.5rem" }}>Employee Count</label>
                           <div style={{ position: "relative" }}>
                             <Users size={18} color="#9ca3af" style={{ position: "absolute", left: "1.1rem", top: "50%", transform: "translateY(-50%)" }} />
                             <input type="number" value={company.employee_count}
@@ -445,6 +498,7 @@ export default function NewAnalysisPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {[
                             { label: "Industry Sector", value: company.industry_sector || "—" },
+                            { label: "Business Type", value: company.is_startup ? `Startup (${company.funding_stage || "Any"})` : "Established" },
                             { label: "Use Case", value: initiative.use_case || "—" },
                             { label: "Readiness Index", value: `${readinessTotal.toFixed(1)}/100`, accent: true },
                             { label: "Budget Allocated", value: `$${initiative.investment_budget_usd.toLocaleString()}` },

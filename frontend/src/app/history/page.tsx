@@ -32,6 +32,30 @@ const allAnalyses = [
   { id: "demo-006", date: "Jan 28, 2026", industry: "Healthcare", useCase: "Computer Vision", roi: 163.4, readiness: 72.0, investment: "$3,500,000", status: "complete" },
 ];
 
+function MetricPill({ icon: Icon, label, value, subtext, accent }: {
+  icon: React.ElementType; label: string; value: string; subtext?: string; accent: string;
+}) {
+  return (
+    <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderTop: `2px solid ${accent}`, padding: "0.85rem 1rem", display: "flex", alignItems: "center", gap: "0.85rem", transition: "box-shadow 0.2s" }}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 14px rgba(0,0,0,0.06)"}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "none"}
+    >
+      <div style={{ width: "34px", height: "34px", background: `${accent}12`, border: `1px solid ${accent}25`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+        <Icon size={15} color={accent} />
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{ fontSize: "0.6rem", fontWeight: 800, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: "0.15rem" }}>{label}</p>
+        <p style={{ fontSize: "1.3rem", fontWeight: 900, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1 }}>{value}</p>
+      </div>
+      {subtext && (
+        <span style={{ fontSize: "0.7rem", fontWeight: 800, color: "#9ca3af" }}>
+          {subtext}
+        </span>
+      )}
+    </div>
+  );
+}
+
 export default function HistoryPage() {
   const [search, setSearch] = useState("");
   const [industryFilter, setIndustryFilter] = useState("All");
@@ -69,7 +93,7 @@ export default function HistoryPage() {
   const avgReadiness = (allAnalyses.reduce((acc, curr) => acc + curr.readiness, 0) / allAnalyses.length).toFixed(1);
 
   return (
-    <div className="flex min-h-screen bg-[#f8fafc]">
+    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
       <Sidebar />
       <main style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
         <TopBar
@@ -77,53 +101,18 @@ export default function HistoryPage() {
           subtitle={`${allAnalyses.length} total strategy runs compiled — explore or select two to compare`}
         />
 
-        <div style={{ flex: 1, padding: "2.5rem", overflowY: "auto" }}>
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-5">
           
           {/* ── Summary Stats ─────────────────────────────────────────────────── */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-5">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <Briefcase size={24} />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Total Analyses</div>
-                <div className="text-2xl font-black text-gray-900">{allAnalyses.length}</div>
-              </div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-5">
-              <div className="w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center text-success shrink-0">
-                <TrendingUp size={24} />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Avg Projected ROI</div>
-                <div className="text-2xl font-black text-gray-900">{avgRoi}%</div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-5">
-              <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent shrink-0">
-                <Activity size={24} />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Avg Readiness</div>
-                <div className="text-2xl font-black text-gray-900">{avgReadiness}/100</div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-center gap-5">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
-                <PieChart size={24} />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Top Industry</div>
-                <div className="text-2xl font-black text-gray-900">Healthcare</div>
-              </div>
-            </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <MetricPill icon={Briefcase}  label="Total Analyses"    value={`${allAnalyses.length}`}  accent="#1a3a5c" />
+            <MetricPill icon={TrendingUp} label="Avg Projected ROI" value={`${avgRoi}%`} accent="#10B981" />
+            <MetricPill icon={Activity}   label="Avg Readiness"     value={`${avgReadiness}`} subtext="/100" accent="#c8a96e" />
+            <MetricPill icon={PieChart}   label="Top Industry"      value="Healthcare" accent="#f59e0b" />
           </div>
 
           {/* ── Filters & Controls ──────────────────────────────────────────────── */}
-          <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm mb-8 flex flex-col lg:flex-row gap-5 items-center justify-between">
+          <div style={{ background: "#ffffff", border: "1px solid #e5e7eb", padding: "0.75rem 1rem" }} className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-6">
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
               <div className="relative w-full sm:w-80">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
@@ -197,7 +186,7 @@ export default function HistoryPage() {
               <p className="font-bold text-lg text-gray-500">No analysis reports match your criteria.</p>
             </div>
           ) : viewMode === "grid" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-10">
               {paginated.map((a) => {
                 const isSelected = selected.includes(a.id);
                 const isHigh = a.readiness >= 70;
@@ -211,13 +200,13 @@ export default function HistoryPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     key={a.id} 
-                    className={`bg-white rounded-2xl border transition-all ${
-                      isSelected ? "border-primary shadow-[0_0_0_2px_rgba(26,58,92,0.2)]" : "border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300"
+                    className={`bg-white border transition-all ${
+                      isSelected ? "border-[#1a3a5c] shadow-[0_0_0_2px_rgba(26,58,92,0.2)]" : "border-[#e5e7eb] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-[#d1d5db]"
                     }`}
                   >
-                    <div style={{ padding: "1.5rem" }}>
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase bg-gray-100 text-gray-600">
+                    <div style={{ padding: "1rem 1.25rem" }}>
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[0.65rem] font-bold uppercase bg-gray-100 text-gray-600 tracking-wider">
                           {a.industry}
                         </div>
                         <label className="cursor-pointer">
@@ -225,46 +214,46 @@ export default function HistoryPage() {
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => toggleSelect(a.id)}
-                            className="w-5 h-5 accent-primary rounded cursor-pointer transition-all border-gray-300"
+                            className="w-4 h-4 accent-[#1a3a5c] rounded cursor-pointer transition-all border-gray-300"
                           />
                         </label>
                       </div>
 
-                      <h3 className="text-xl font-black text-gray-900 mb-2 truncate" title={a.useCase}>{a.useCase}</h3>
-                      <div className="flex items-center gap-2 text-sm text-gray-500 font-semibold mb-6">
-                        <Calendar size={14} /> {a.date}
+                      <h3 className="text-[1.05rem] font-black text-gray-900 mb-1.5 truncate" title={a.useCase}>{a.useCase}</h3>
+                      <div className="flex items-center gap-1.5 text-xs text-gray-500 font-semibold mb-4">
+                        <Calendar size={13} /> {a.date}
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                          <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Proj. ROI</div>
-                          <div className="text-xl font-black text-success">{a.roi}%</div>
+                      <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div className="bg-[#f9fafb] p-2.5 border border-[#e5e7eb]">
+                          <div className="text-[0.65rem] font-bold text-[#9ca3af] uppercase tracking-wider mb-0.5">Proj. ROI</div>
+                          <div className="text-[1.1rem] font-black" style={{ color: "#10B981" }}>{a.roi}%</div>
                         </div>
-                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                          <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Investment</div>
-                          <div className="text-lg font-black text-gray-800">{a.investment}</div>
+                        <div className="bg-[#f9fafb] p-2.5 border border-[#e5e7eb]">
+                          <div className="text-[0.65rem] font-bold text-[#9ca3af] uppercase tracking-wider mb-0.5">Investment</div>
+                          <div className="text-[1rem] font-black text-[#111827]">{a.investment}</div>
                         </div>
                       </div>
 
-                      <div className="space-y-2 mb-6">
-                        <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="space-y-1.5 mb-4">
+                        <div className="flex justify-between items-center text-xs font-bold">
                           <span className="text-gray-600">Readiness Score</span>
                           <span className={scoreColor}>{a.readiness}/100</span>
                         </div>
-                        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
                           <div style={{ width: `${a.readiness}%` }} className={`h-full rounded-full ${progressColor}`} />
                         </div>
                       </div>
 
                       <Link 
                         href={`/analysis/${a.id}`} 
-                        className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] py-3.5 mt-2 font-bold text-white shadow-[0_4px_12px_rgba(26,58,92,0.25)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,58,92,0.4)] hover:-translate-y-0.5"
+                        className="group relative flex w-full items-center justify-center gap-2 overflow-hidden bg-gradient-to-r from-[#1a3a5c] to-[#2d5a8a] py-2 mt-2 font-bold text-white shadow-[0_2px_8px_rgba(26,58,92,0.2)] transition-all duration-300 hover:shadow-[0_4px_12px_rgba(26,58,92,0.3)]"
                       >
                         <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
                           <div className="relative h-full w-8 bg-white/20" />
                         </div>
-                        <span className="relative z-10 text-[0.8rem] tracking-[0.1em] uppercase">Inspect Report</span>
-                        <ArrowUpRight size={14} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <span className="relative z-10 text-[0.7rem] tracking-[0.1em] uppercase">Inspect Report</span>
+                        <ArrowUpRight size={13} className="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </Link>
                     </div>
                   </motion.div>
@@ -272,7 +261,7 @@ export default function HistoryPage() {
               })}
             </div>
           ) : (
-            <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden mb-10 shadow-sm">
+            <div className="bg-white border border-[#e5e7eb] overflow-hidden mb-10">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
