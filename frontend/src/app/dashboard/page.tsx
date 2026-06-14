@@ -165,7 +165,7 @@ export default function DashboardPage() {
                     <YAxis tick={{ fill: "#9ca3af", fontSize: 10, fontWeight: 600 }} axisLine={false} tickLine={false} unit="%" />
                     <Tooltip
                       contentStyle={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: "4px", fontSize: "11px", boxShadow: "0 4px 16px rgba(0,0,0,0.08)" }}
-                      formatter={(v: number, n: string) => [`${v}%`, n === "roi" ? "This Cycle" : "Last Cycle"]}
+                      formatter={(v: any, n: any) => [`${v}%`, n === "roi" ? "This Cycle" : "Last Cycle"]}
                     />
                     <Area type="monotone" dataKey="prev" stroke="#d1d5db" strokeWidth={1.5} strokeDasharray="5 3" fill="transparent" dot={false} />
                     <Area type="monotone" dataKey="roi"  stroke="#1a3a5c" strokeWidth={2.5} fill="url(#g1)"
