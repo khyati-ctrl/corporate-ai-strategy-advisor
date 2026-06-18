@@ -56,6 +56,8 @@ export async function POST(req: Request) {
       roiForecast,
       costReduction,
       maturityLevel,
+      predictedBenefit,
+      boardroomReport,
     } = body;
 
     if (!companyName || !industry || !companySize) {
@@ -75,6 +77,8 @@ export async function POST(req: Request) {
         roiForecast,
         costReduction,
         maturityLevel,
+        predictedBenefit,
+        boardroomReport,
       }
     });
 

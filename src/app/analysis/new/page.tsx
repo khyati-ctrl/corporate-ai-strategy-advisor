@@ -237,12 +237,10 @@ const apiPayload = {
   country: company.country,
 };
 
-// Replace with actual Render URL when ML team gives it
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://corporate-ai-backend.onrender.com";
+// Removed Render URL fallback to enforce calling Next.js API route
+console.log("Before frontend fetch: POST to /api/predict with body:", apiPayload);
 
-const predictRes = await fetch(`${API_URL}/predict`, {
+const predictRes = await fetch(`/api/predict`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -250,15 +248,25 @@ const predictRes = await fetch(`${API_URL}/predict`, {
   body: JSON.stringify(apiPayload),
 });
 
+console.log("After frontend fetch. Status:", predictRes.status);
+
 if (!predictRes.ok) {
   throw new Error(
     `Prediction API failed with status ${predictRes.status}`
   );
 }
 
-const predictions = await predictRes.json();
+const rawPredictions: { predicted_financial_benefit_usd: number; roi_percentage: number; boardroom_report: string } = await predictRes.json();
 
-console.log("ML Prediction Response:", predictions);
+console.log("ML Prediction Response:", rawPredictions);
+
+const predictions = {
+  roiForecast: rawPredictions.roi_percentage,
+  costReduction: rawPredictions.roi_percentage > 50 ? 25 : rawPredictions.roi_percentage > 20 ? 15 : 5,
+  maturityLevel: rawPredictions.roi_percentage > 80 ? "Advanced" : rawPredictions.roi_percentage > 40 ? "Intermediate" : "Beginner",
+  predictedBenefit: rawPredictions.predicted_financial_benefit_usd,
+  boardroomReport: rawPredictions.boardroom_report,
+};
 
 // Store latest prediction for debugging/results page
 localStorage.setItem(
@@ -284,9 +292,11 @@ localStorage.setItem(
           businessGoals: initiative.use_case,
           datasetUrl: initiative.datasetUrl,
           readinessScore: readinessTotal,
-          roiForecast: predictions.roi,
+          roiForecast: predictions.roiForecast,
           costReduction: predictions.costReduction,
-          maturityLevel: predictions.maturityLevel
+          maturityLevel: predictions.maturityLevel,
+          predictedBenefit: predictions.predictedBenefit,
+          boardroomReport: predictions.boardroomReport
         })
       });
 

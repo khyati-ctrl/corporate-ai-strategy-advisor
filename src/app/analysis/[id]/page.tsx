@@ -246,7 +246,9 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
     roi_prediction: {
       ...mockResult.roi_prediction,
       roi_predicted_pct: analysisData.roiForecast || mockResult.roi_prediction.roi_predicted_pct,
-    }
+    },
+    predictedBenefit: analysisData.predictedBenefit,
+    boardroomReport: analysisData.boardroomReport
   } : mockResult;
 
   return (
@@ -596,7 +598,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                 <h3 style={{ fontSize: "0.95rem", fontWeight: 800, color: "#111827", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.625rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                   <FileText size={16} color="#1a3a5c" /> Executive Assessment Summary
                 </h3>
-                <p style={{ fontSize: "0.9rem", color: "#374151", lineHeight: 1.8 }}>{r.insights.executive_summary}</p>
+                <p style={{ fontSize: "0.9rem", color: "#374151", lineHeight: 1.8 }}>{r.boardroomReport || r.insights.executive_summary}</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

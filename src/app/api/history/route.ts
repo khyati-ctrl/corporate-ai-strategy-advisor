@@ -30,6 +30,8 @@ export async function GET(req: Request) {
         roiForecast: true,
         costReduction: true,
         maturityLevel: true,
+        predictedBenefit: true,
+        boardroomReport: true,
         createdAt: true,
       }
     });

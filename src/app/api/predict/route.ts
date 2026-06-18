@@ -1,27 +1,33 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
   try {
-    // Demo Mode Bypass: Allow predictions without strict NextAuth session
-    const session = await getServerSession(authOptions);
+    const body = await req.json();
+    console.log("[route.ts] Inside route.ts: Received body", body);
 
-    // In the future, this will forward the dataset or data to the ML model.
-    // For now, we mock the ML response.
-    const mockResponse = {
-      readiness: 82,
-      roi: 35,
-      costReduction: 28,
-      maturityLevel: "Intermediate"
-    };
+    console.log("[route.ts] Before FastAPI call: Fetching http://127.0.0.1:8000/predict");
+    const response = await fetch(
+      "http://127.0.0.1:8000/predict",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
-    // Simulate some processing delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log("[route.ts] After FastAPI response. Status:", response.status);
+    const result = await response.json();
+    console.log("[route.ts] FastAPI Result:", result);
 
-    return NextResponse.json(mockResponse);
+    return NextResponse.json(result);
   } catch (error) {
-    console.error("POST /api/predict error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("[route.ts] Prediction Error:", error);
+
+    return NextResponse.json(
+      { error: "Prediction failed" },
+      { status: 500 }
+    );
   }
 }
