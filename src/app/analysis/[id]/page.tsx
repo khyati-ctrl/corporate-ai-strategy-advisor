@@ -470,7 +470,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                           formatter={(v: any) => [`${v}%`, "Contribution"]}
                         />
                         <Bar dataKey="importance" radius={[0, 2, 2, 0]}>
-                          {r.shap_features.map((entry, index) => (
+                          {r.shap_features.map((entry: any, index: number) => (
                             <Cell key={`cell-${index}`} fill={`url(#barGradCorp-${index})`} />
                           ))}
                         </Bar>
