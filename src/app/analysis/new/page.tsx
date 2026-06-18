@@ -209,10 +209,67 @@ export default function NewAnalysisPage() {
     }
 
     try {
-      // 1. Fetch ML predictions mock
-      setLoadingMsg(messages[3]);
-      const predictRes = await fetch('/api/predict', { method: 'POST' });
-      const predictions = await predictRes.json();
+      // 1. Build payload for ML model
+setLoadingMsg(messages[3]);
+
+const apiPayload = {
+  year: new Date().getFullYear(),
+  ai_adoption_level: Math.max(
+    1,
+    Math.min(5, Math.round(readiness.leadership_score / 2))
+  ),
+  ai_investment_usd: Number(initiative.investment_budget_usd),
+  automation_rate: parseFloat(
+    (readiness.tech_stack_score / 10).toFixed(2)
+  ),
+  productivity_gain: parseFloat(
+    (readiness.data_quality_score / 10).toFixed(2)
+  ),
+  employee_ai_training_hours: Math.round(
+    readiness.talent_score * 20
+  ),
+  ai_maturity_score: Math.round(readinessTotal),
+  deployment_count: Math.max(
+    1,
+    Math.floor(initiative.timeline_months / 2)
+  ),
+  industry: company.industry_sector,
+  country: company.country,
+};
+
+// Replace with actual Render URL when ML team gives it
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://corporate-ai-backend.onrender.com";
+
+const predictRes = await fetch(`${API_URL}/predict`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(apiPayload),
+});
+
+if (!predictRes.ok) {
+  throw new Error(
+    `Prediction API failed with status ${predictRes.status}`
+  );
+}
+
+const predictions = await predictRes.json();
+
+console.log("ML Prediction Response:", predictions);
+
+// Store latest prediction for debugging/results page
+localStorage.setItem(
+  "latest_roi_prediction",
+  JSON.stringify(predictions)
+);
+
+localStorage.setItem(
+  "latest_query_payload",
+  JSON.stringify(apiPayload)
+);
 
       setLoadingMsg(messages[4]);
       // 2. Save Analysis
