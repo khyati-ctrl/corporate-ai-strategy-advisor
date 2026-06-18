@@ -5,7 +5,7 @@ import Link from "next/link";
 import Sidebar from "@frontend/components/Sidebar";
 import TopBar from "@frontend/components/TopBar";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Customized,
 } from "recharts";
 import {
   TrendingUp, Clock, Gauge, Award, Plus, Download,
@@ -474,14 +474,16 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                             <Cell key={`cell-${index}`} fill={`url(#barGradCorp-${index})`} />
                           ))}
                         </Bar>
-                        <defs>
-                          {r.shap_features.map((_: any, index: number) => (
-                            <linearGradient key={`grad-${index}`} id={`barGradCorp-${index}`} x1="0" y1="0" x2="1" y2="0">
-                              <stop offset="0%" stopColor="#1a3a5c" stopOpacity={1 - index * 0.1} />
-                              <stop offset="100%" stopColor="#c8a96e" stopOpacity={1 - index * 0.1} />
-                            </linearGradient>
-                          ))}
-                        </defs>
+                        <Customized component={() => (
+                          <defs>
+                            {r.shap_features.map((_: any, index: number) => (
+                              <linearGradient key={`grad-${index}`} id={`barGradCorp-${index}`} x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stopColor="#1a3a5c" stopOpacity={1 - index * 0.1} />
+                                <stop offset="100%" stopColor="#c8a96e" stopOpacity={1 - index * 0.1} />
+                              </linearGradient>
+                            ))}
+                          </defs>
+                        )} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
