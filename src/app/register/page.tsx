@@ -139,6 +139,10 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.email || !form.password) {
+      alert("Please go back and ensure your Email and Password are filled out.");
+      return;
+    }
     setLoading(true);
     try {
       const name = `${form.firstName} ${form.lastName}`.trim();
@@ -155,10 +159,12 @@ export default function RegisterPage() {
         });
         router.push("/dashboard");
       } else {
+        alert("Registration failed. Please check your information and try again.");
         console.error("Registration failed");
         setLoading(false);
       }
     } catch (e) {
+      alert("An unexpected error occurred. Please try again.");
       console.error(e);
       setLoading(false);
     }
