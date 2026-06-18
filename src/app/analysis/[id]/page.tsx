@@ -236,7 +236,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
   }
 
   // Merge DB data with mock structure for display purposes
-  const r = analysisData ? {
+  const r: any = analysisData ? {
     ...mockResult,
     analysis_id: analysisData.id,
     industry: analysisData.industry || mockResult.industry,
