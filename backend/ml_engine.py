@@ -1,6 +1,37 @@
 import pandas as pd
 import pickle
 import requests
+import os
+
+# --- 0. SECURE ENVIRONMENT SETUP ---
+# This pulls the hidden key from Render/Hugging Face Spaces without leaking it on GitHub
+HF_API_KEY = os.getenv("HUGGINGFACE_TOKEN")
+
+# We will use Mistral-7B because it is blazing fast on the free tier
+API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
+headers = {"Authorization": f"Bearer {HF_API_KEY}"}
+
+def generate_executive_summary(industry, budget, roi, benefit):
+    # The [INST] tags are how Mistral knows it is receiving a direct instruction
+    prompt = f"""[INST] Act as a Senior AI Strategy Consultant. A company in the {industry} sector is planning a ${budget} AI investment. 
+    Our XGBoost model predicts a {roi}% ROI and a ${benefit} total financial benefit.
+    Write a punchy, professional, 3-paragraph executive summary for the Board of Directors explaining why this is a good investment. [/INST]"""
+    
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "max_new_tokens": 200,
+            "return_full_text": False # This ensures it only returns the answer, not your prompt
+        }
+    }
+    
+    try:
+        response = requests.post(API_URL, headers=headers, json=payload, timeout=15)
+        # Hugging face returns a list with a dictionary
+        return response.json()[0]['generated_text'].strip()
+    except Exception as e:
+        print(f"LLM Error: {e}")
+        return "Executive summary generation unavailable. Please refer to the raw predictive metrics."
 
 # --- 1. THE COMPLETE ARCHITECTURE  ---
 EXPECTED_COLUMNS = [
@@ -16,15 +47,19 @@ EXPECTED_COLUMNS = [
 ]
 
 # Wake up the trained XGBoost model
-with open("champion_roi_model.pkl", "rb") as file:
-    champion_model = pickle.load(file)
+try:
+    with open("champion_roi_model.pkl", "rb") as file:
+        champion_model = pickle.load(file)
+except FileNotFoundError:
+    print("WARNING: champion_roi_model.pkl not found! Ensure it is in the same directory.")
+    champion_model = None
 
 # --- 2. PREPROCESSING ---
 def preprocess_user_data(user_payload):
     # Create the blank 31-column Scantron sheet
     input_df = pd.DataFrame(0, index=[0], columns=EXPECTED_COLUMNS)
     
-    # Map all the raw numbers (We added the missing ones here!)
+    # Map all the raw numbers 
     input_df['year'] = user_payload['year']
     input_df['ai_adoption_level'] = user_payload['ai_adoption_level']
     input_df['ai_investment_usd'] = user_payload['ai_investment_usd']
@@ -48,6 +83,9 @@ def preprocess_user_data(user_payload):
 
 # --- 3. THE PREDICTION ENGINE ---
 def calculate_roi(user_payload):
+    if champion_model is None:
+        return {"error": "Model file missing."}
+
     # Step A: Translate the text
     processed_matrix = preprocess_user_data(user_payload)
     
@@ -61,51 +99,21 @@ def calculate_roi(user_payload):
     else:
         roi_percentage = (predicted_benefit / initial_investment) * 100
         
-    # Step D: Package the final answer
-    return {
-        "predicted_financial_benefit_usd": round(float(predicted_benefit), 2),
-        "roi_percentage": round(float(roi_percentage), 2)
-    }
+    # Round the numbers to look clean on the frontend
+    final_benefit_rounded = round(float(predicted_benefit), 2)
+    final_roi_rounded = round(float(roi_percentage), 2)
 
-
-
-# We will use Mistral-7B because it is blazing fast on the free tier
-API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
-headers = {"Authorization": f"Bearer {HF_API_KEY}"}
-
-def generate_executive_summary(industry, budget, roi, benefit):
-    # The [INST] tags are how Mistral knows it is receiving a direct instruction
-    prompt = f"""[INST] Act as a Senior AI Strategy Consultant. A company in the {industry} sector is planning a ${budget} AI investment. 
-    Our XGBoost model predicts a {roi}% ROI and a ${benefit} total financial benefit.
-    Write a punchy, professional, 3-paragraph executive summary for the Board of Directors explaining why this is a good investment. [/INST]"""
-    
-    payload = {
-        "inputs": prompt,
-        "parameters": {
-            "max_new_tokens": 200,
-            "return_full_text": False # This ensures it only returns the answer, not your prompt
-        }
-    }
-    
-    try:
-        response = requests.post(API_URL, headers=headers, json=payload)
-        # Hugging face returns a list with a dictionary
-        return response.json()[0]['generated_text'].strip()
-    except Exception as e:
-        print(f"LLM Error: {e}")
-        return "Executive summary generation unavailable. Please refer to the raw predictive metrics."
-
-    # 1. Ask Mistral to write the report
+    # Step D: Ask Mistral to write the report using the correct dictionary keys
     llm_report = generate_executive_summary(
-        industry=input_data.industry,
-        budget=input_data.ai_investment_usd,
-        roi=final_roi,
-        benefit=final_benefit
+        industry=user_payload['industry'],
+        budget=user_payload['ai_investment_usd'],
+        roi=final_roi_rounded,
+        benefit=final_benefit_rounded
     )
 
-    # 2. Package it all up
+    # Step E: Package it ALL up in ONE final return statement
     return {
-        "predicted_financial_benefit_usd": final_benefit,
-        "roi_percentage": final_roi,
+        "predicted_financial_benefit_usd": final_benefit_rounded,
+        "roi_percentage": final_roi_rounded,
         "boardroom_report": llm_report
     }
