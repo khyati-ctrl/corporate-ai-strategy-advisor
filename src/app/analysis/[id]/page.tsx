@@ -608,7 +608,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     <CheckCircle2 size={16} color="#10B981" /> Key Findings
                   </h3>
                   <ul style={{ display: "flex", flexDirection: "column" as const, gap: "0.85rem" }}>
-                    {r.insights.key_findings.map((f, i) => (
+                    {r.insights.key_findings.map((f: any, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
                         <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981", flexShrink: 0, marginTop: "6px" }} />
                         <span style={{ fontSize: "0.85rem", color: "#374151", lineHeight: 1.6 }}>{f}</span>
@@ -623,7 +623,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     <AlertTriangle size={16} color="#ef4444" /> Risk Profiles
                   </h3>
                   <ul style={{ display: "flex", flexDirection: "column" as const, gap: "0.85rem" }}>
-                    {r.insights.risk_factors.map((f, i) => (
+                    {r.insights.risk_factors.map((f: any, i: number) => (
                       <li key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
                         <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#ef4444", flexShrink: 0, marginTop: "6px" }} />
                         <span style={{ fontSize: "0.85rem", color: "#374151", lineHeight: 1.6 }}>{f}</span>
@@ -639,7 +639,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                   <Lightbulb size={16} color="#c8a96e" /> Strategic Capital Opportunities
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {r.insights.opportunities.map((o, i) => (
+                  {r.insights.opportunities.map((o: any, i: number) => (
                     <div key={i} style={{
                       padding: "1.5rem", background: "rgba(16,185,129,0.04)",
                       border: "1px solid rgba(16,185,129,0.12)",
