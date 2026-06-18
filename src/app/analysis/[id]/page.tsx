@@ -299,7 +299,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
               { id: "roi", label: "ROI Projections", icon: TrendingUp },
               { id: "recommendations", label: "Strategic Roadmap", icon: Layers },
               { id: "insights", label: "Boardroom Insights", icon: Sparkles },
-            ].map(tab => {
+            ].map((tab: any) => {
               const isActive = activeTab === tab.id;
               const Icon = tab.icon;
               return (
@@ -475,7 +475,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                           ))}
                         </Bar>
                         <defs>
-                          {r.shap_features.map((_, index) => (
+                          {r.shap_features.map((_: any, index: number) => (
                             <linearGradient key={`grad-${index}`} id={`barGradCorp-${index}`} x1="0" y1="0" x2="1" y2="0">
                               <stop offset="0%" stopColor="#1a3a5c" stopOpacity={1 - index * 0.1} />
                               <stop offset="100%" stopColor="#c8a96e" stopOpacity={1 - index * 0.1} />
@@ -498,7 +498,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     <div style={{ width: "24px", height: "2px", background: "#c8a96e", marginTop: "0.5rem", marginBottom: "1rem" }} />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
-                    {r.readiness_breakdown.map(dim => {
+                    {r.readiness_breakdown.map((dim: any) => {
                       const isHigh = dim.score >= 7.0;
                       const isMid = dim.score >= 5.0 && dim.score < 7.0;
                       const barColor = isHigh ? "#10B981" : isMid ? "#f59e0b" : "#ef4444";
@@ -542,7 +542,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
           {/* ── Recommendations Tab ─── */}
           {activeTab === "recommendations" && (
             <div style={{ display: "flex", flexDirection: "column" as const, gap: "1.25rem" }}>
-              {r.recommendations.map(rec => (
+              {r.recommendations.map((rec: any) => (
                 <div key={rec.rank} style={{...card, padding: "1.5rem" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1.25rem", flexWrap: "wrap" as const }}>
                     <div style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
@@ -574,7 +574,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                       Required Resources
                     </span>
                     <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" as const }}>
-                      {rec.resources.map(res => (
+                      {rec.resources.map((res: any) => (
                         <span key={res} style={{
                           padding: "0.4rem 0.85rem", background: "#f9fafb",
                           border: "1px solid #e5e7eb", fontSize: "0.8rem",
