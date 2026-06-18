@@ -5,7 +5,7 @@ import Link from "next/link";
 import Sidebar from "@frontend/components/Sidebar";
 import TopBar from "@frontend/components/TopBar";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Customized,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from "recharts";
 import {
   TrendingUp, Clock, Gauge, Award, Plus, Download,
@@ -470,20 +470,16 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                           formatter={(v: any) => [`${v}%`, "Contribution"]}
                         />
                         <Bar dataKey="importance" radius={[0, 2, 2, 0]}>
-                          {r.shap_features.map((entry: any, index: number) => (
-                            <Cell key={`cell-${index}`} fill={`url(#barGradCorp-${index})`} />
-                          ))}
+                          {r.shap_features.map((entry: any, index: number) => {
+                            const opacity = Math.max(0.3, 1 - index * 0.1);
+                            return (
+                              <Cell
+                                key={`cell-${index}`}
+                                fill={index % 2 === 0 ? `rgba(26,58,92,${opacity})` : `rgba(200,169,110,${opacity})`}
+                              />
+                            );
+                          })}
                         </Bar>
-                        <Customized component={() => (
-                          <defs>
-                            {r.shap_features.map((_: any, index: number) => (
-                              <linearGradient key={`grad-${index}`} id={`barGradCorp-${index}`} x1="0" y1="0" x2="1" y2="0">
-                                <stop offset="0%" stopColor="#1a3a5c" stopOpacity={1 - index * 0.1} />
-                                <stop offset="100%" stopColor="#c8a96e" stopOpacity={1 - index * 0.1} />
-                              </linearGradient>
-                            ))}
-                          </defs>
-                        )} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
