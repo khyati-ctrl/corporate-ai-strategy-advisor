@@ -1,5 +1,6 @@
 import pandas as pd
 import pickle
+import requests
 
 # --- 1. THE COMPLETE ARCHITECTURE  ---
 EXPECTED_COLUMNS = [
@@ -64,4 +65,47 @@ def calculate_roi(user_payload):
     return {
         "predicted_financial_benefit_usd": round(float(predicted_benefit), 2),
         "roi_percentage": round(float(roi_percentage), 2)
+    }
+
+
+
+# We will use Mistral-7B because it is blazing fast on the free tier
+API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3"
+headers = {"Authorization": f"Bearer {HF_API_KEY}"}
+
+def generate_executive_summary(industry, budget, roi, benefit):
+    # The [INST] tags are how Mistral knows it is receiving a direct instruction
+    prompt = f"""[INST] Act as a Senior AI Strategy Consultant. A company in the {industry} sector is planning a ${budget} AI investment. 
+    Our XGBoost model predicts a {roi}% ROI and a ${benefit} total financial benefit.
+    Write a punchy, professional, 3-paragraph executive summary for the Board of Directors explaining why this is a good investment. [/INST]"""
+    
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "max_new_tokens": 200,
+            "return_full_text": False # This ensures it only returns the answer, not your prompt
+        }
+    }
+    
+    try:
+        response = requests.post(API_URL, headers=headers, json=payload)
+        # Hugging face returns a list with a dictionary
+        return response.json()[0]['generated_text'].strip()
+    except Exception as e:
+        print(f"LLM Error: {e}")
+        return "Executive summary generation unavailable. Please refer to the raw predictive metrics."
+
+    # 1. Ask Mistral to write the report
+    llm_report = generate_executive_summary(
+        industry=input_data.industry,
+        budget=input_data.ai_investment_usd,
+        roi=final_roi,
+        benefit=final_benefit
+    )
+
+    # 2. Package it all up
+    return {
+        "predicted_financial_benefit_usd": final_benefit,
+        "roi_percentage": final_roi,
+        "boardroom_report": llm_report
     }
