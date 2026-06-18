@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     console.log("[route.ts] Before FastAPI call: Fetching http://127.0.0.1:8000/predict");
     const response = await fetch(
-      "http://127.0.0.1:8000/predict",
+  "https://khyati11-corporate-advisor-ai-agent.hf.space/predict",
       {
         method: "POST",
         headers: {
